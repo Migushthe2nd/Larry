@@ -55,7 +55,7 @@ class GTP3 {
      * Keep the last 20 lines of the message. Else it will use too many tokens.
      */
     keep20(guildId) {
-        const lines = this.prompt[guildId].split("\n");
+        const lines = this.prompt[guildId].split("\n").filter((l) => l.length > 0 && l !== "\n");
         this.prompt[guildId] = lines.slice(-20).join("\n");
     }
 
