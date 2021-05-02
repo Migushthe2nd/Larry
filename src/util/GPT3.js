@@ -14,7 +14,7 @@ class GTP3 {
             if (!this.prompt[guildId]) {
                 this.prompt[guildId] = DEFAULT_PROMPT;
             }
-            this.prompt[guildId] += "\nYou: " + newInput;
+            this.prompt[guildId] += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";
 
             this.keep20(guildId);
 
