@@ -32,7 +32,7 @@ class GTP3 {
                         topP: 1.0,
                         frequencyPenalty: 1.0,
                         presencePenalty: 1.0,
-                        stop: ["You:", "Friend:", "He:", "She:"],
+                        stop: ["You:", "you:", "Friend:", "friend:", "He:", "he:", "She:", "she:"],
                     });
 
                     if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
@@ -49,7 +49,7 @@ class GTP3 {
                         resolve("Sorry, I don't have an answer to that");
                     }
                 } catch (e) {
-                    console.error(e);
+                    console.error(e.response.data);
                     resolve("Sorry, I'm not really in the mood to talk");
                 }
             }
