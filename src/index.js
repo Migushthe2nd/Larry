@@ -21,18 +21,18 @@ client.on("message", async (message) => {
 
     if (message.author.bot) {
         return;
-    } else if (textLower === "larry reset" && !!message.guild) {
+    } else if (!message.guild) {
+        await message.reply("I only work in guilds.");
+    } else if (textLower === "larry reset") {
         GPT3.reset(message.guild.id);
         await message.channel.send("Aight, I'm ready for something new");
-    } else if (textLower === "larry help" && !!message.guild) {
+    } else if (textLower === "larry help") {
         await message.channel.send("You can reset the conversation by typing `larry reset`");
-    } else if (message.mentions.has(client.user) && !textLower.startsWith("?") && !!message.guild) {
+    } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
         queue.enqueue(async () => {
             const resp = await typingAndResolve(message.channel, GPT3.generateResponse(text.replace(/<@.*?>\s?/gm, "") + "\n", message.guild.id));
             await message.channel.send(resp.replace(/\.$/, ""));
         });
-    } else if (!message.guild) {
-        await message.reply("I only work in guilds.");
     }
 });
 
