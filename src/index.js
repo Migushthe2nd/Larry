@@ -19,7 +19,9 @@ client.on("message", async (message) => {
     const text = message.content;
     const textLower = message.content.toLowerCase();
 
-    if (textLower === "larry reset" && !!message.guild) {
+    if (message.author.bot) {
+        return;
+    } else if (textLower === "larry reset" && !!message.guild) {
         GPT3.reset(message.guild.id);
         await message.channel.send("Aight, I'm ready for something new");
     } else if (textLower === "larry help" && !!message.guild) {
