@@ -14,39 +14,44 @@ class GTP3 {
             if (!this.prompt[guildId]) {
                 this.prompt[guildId] = DEFAULT_PROMPT;
             }
-            this.prompt[guildId] += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";
 
-            this.keep20(guildId);
+            if (newInput.length > 200) {
+                resolve("Sorry, I'm not going to reed a message that long");
+            } else {
+                this.prompt[guildId] += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";
 
-            try {
-                console.log("Sending prompt:", this.prompt[guildId]);
-                const response = await openai.complete({
-                    engine: "davinci",
-                    prompt: this.prompt[guildId],
-                    temperature: 0.7,
-                    maxTokens: 80,
-                    topP: 1.0,
-                    frequencyPenalty: 0.5,
-                    presencePenalty: 0.2,
-                    stop: ["You:", "Friend:", "He:", "She:"],
-                });
+                this.keep20(guildId);
 
-                if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
-                    console.log("Response received:", response.data.choices[0]);
-                    this.prompt[guildId] += response.data.choices[0].text;
-                    const text = response.data.choices[0].text.trim();
-                    if (text.indexOf(":") < 25) {
-                        resolve(text.replace(/^(?!https?).*?:/, ""));
+                try {
+                    console.log("Sending prompt:", this.prompt[guildId]);
+                    const response = await openai.complete({
+                        engine: "davinci",
+                        prompt: this.prompt[guildId],
+                        temperature: 0.7,
+                        maxTokens: 80,
+                        topP: 1.0,
+                        frequencyPenalty: 0.5,
+                        presencePenalty: 0.2,
+                        stop: ["You:", "Friend:", "He:", "She:"],
+                    });
+
+                    if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
+                        console.log("Response received:", response.data.choices[0]);
+                        this.prompt[guildId] += response.data.choices[0].text;
+                        const text = response.data.choices[0].text.trim();
+                        if (text.indexOf(":") < 25) {
+                            resolve(text.replace(/^(?!https?).*?:/, ""));
+                        } else {
+                            resolve(text);
+                        }
                     } else {
-                        resolve(text);
+                        console.log("Empty response received!");
+                        resolve("Sorry, I don't have an answer to that");
                     }
-                } else {
-                    console.log("Empty response received!");
-                    resolve("Sorry, I don't have an answer to that");
+                } catch (e) {
+                    console.error(e);
+                    resolve("Sorry, I'm not really in the mood to talk");
                 }
-            } catch (e) {
-                console.error(e);
-                resolve("Sorry, I'm not really in the mood to talk");
             }
         });
     }
