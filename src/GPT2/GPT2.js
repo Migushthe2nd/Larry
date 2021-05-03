@@ -20,7 +20,7 @@ class GTP2 {
 
                 try {
                     console.log("Sending prompt:", this.prompt);
-                    const outList = await booste.gpt2XL(process.env.BOOSTE_API_KEY, this.prompt, this.MAX_LENGTH);
+                    const outList = await booste.gpt2(process.env.BOOSTE_API_KEY, this.prompt, this.MAX_LENGTH);
                     const response = outList.join(" ").split("\n")[0];
                     this.prompt += response;
 
