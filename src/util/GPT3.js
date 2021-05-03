@@ -40,7 +40,7 @@ class GTP3 {
                         this.prompt[guildId] += response.data.choices[0].text;
                         const text = response.data.choices[0].text.trim();
                         if (text.indexOf(":") < 25) {
-                            resolve(text.replace(/^(?!https?).*?:/, ""));
+                            resolve(text.replace(/^(?!https?)^(?!\s).*?:/, ""));
                         } else {
                             resolve(text);
                         }
