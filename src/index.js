@@ -12,6 +12,7 @@ client.on("ready", () => {
 
 const queue = new Queue({
     concurrent: 1,
+    interval: 2000,
 });
 
 client.on("message", async (message) => {
