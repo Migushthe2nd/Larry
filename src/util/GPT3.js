@@ -25,7 +25,7 @@ class GTP3 {
                 try {
                     console.log("Sending prompt:", this.prompt[guildId]);
                     const response = await openai.complete({
-                        engine: "davinci-instruct-beta",
+                        engine: "davinci",
                         prompt: this.prompt[guildId],
                         temperature: 1.0,
                         maxTokens: 80,
