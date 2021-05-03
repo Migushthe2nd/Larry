@@ -31,7 +31,7 @@ class GTP3 {
                         maxTokens: 80,
                         topP: 1.0,
                         frequencyPenalty: 0.5,
-                        presencePenalty: 0.2,
+                        presencePenalty: 0.3,
                         stop: ["You:", "Friend:", "He:", "She:"],
                     });
 
