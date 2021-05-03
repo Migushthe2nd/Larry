@@ -8,6 +8,7 @@ const GuildSettings = require("./util/GuildSettings");
 const {typingAndResolve} = require("./util/Typing");
 
 const client = new Discord.Client(); // Initiates the client
+require("./util/ExtendedMessage");
 
 client.on("ready", () => {
     console.log("Bot Started!");
@@ -60,7 +61,7 @@ client.on("message", async (message) => {
         } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
             queue.enqueue(async () => {
                 const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, "") + "\n"));
-                await message.channel.send(resp.replace(/\.$/, ""));
+                await message.inlineReply(resp.replace(/\.$/, ""), { allowedMentions: { repliedUser: false } });
             });
         }
     }
