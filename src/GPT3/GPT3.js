@@ -29,10 +29,10 @@ class GTP3 {
 
                     if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
                         console.log("Response received:", response.data.choices[0]);
-                        this.prompt += response.data.choices[0].text;
-                        const text = response.data.choices[0].text.trim();
+                        const text = response.data.choices[0].text;
+                        this.prompt += text;
                         if (text.indexOf(":") < 25) {
-                            resolve(text.replace(/^(?!https?)^(?!\s+).*?:/, ""));
+                            resolve(text.replace(/.*?(?<!\s)(?<!https)(?<!http):/, ""));
                         } else {
                             resolve(text);
                         }
