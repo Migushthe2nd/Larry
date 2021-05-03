@@ -27,11 +27,11 @@ class GTP3 {
                     const response = await openai.complete({
                         engine: "davinci",
                         prompt: this.prompt[guildId],
-                        temperature: 0.8,
+                        temperature: 1.0,
                         maxTokens: 80,
                         topP: 1.0,
-                        frequencyPenalty: 0.6,
-                        presencePenalty: 0.3,
+                        frequencyPenalty: 1.0,
+                        presencePenalty: 1.0,
                         stop: ["You:", "Friend:", "He:", "She:"],
                     });
 
