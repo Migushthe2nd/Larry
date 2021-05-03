@@ -24,7 +24,7 @@ client.on("message", async (message) => {
         await message.channel.send("Aight, I'm ready for something new");
     } else if (textLower === "larry help" && !!message.guild) {
         await message.channel.send("You can reset the conversation by typing `larry reset`");
-    } else if (message.mentions.has(client.user) && !!message.guild) {
+    } else if (message.mentions.has(client.user) && !textLower.startsWith("?") && !!message.guild) {
         queue.enqueue(async () => {
             const resp = await typingAndResolve(message.channel, GPT3.generateResponse(text.replace(/<@.*?>\s?/gm, "") + "\n", message.guild.id));
             await message.channel.send(resp.replace(/\.$/, ""));
