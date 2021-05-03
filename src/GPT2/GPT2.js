@@ -1,12 +1,11 @@
-const OpenAI = require("openai-api");
-const Personalities = require("./Personalities");
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+const booste = require("booste");
 
-class GTP3 {
+class GTP2 {
+    MAX_LENGTH = 20;
     MAX_PROMPT_LINES = 10;
     DEFAULT_PROMPT = "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.";
     prompt = this.DEFAULT_PROMPT;
-    personality = "cheap";
+    personality = null;
 
     /**
      * Generate a new response for a conversation
@@ -21,20 +20,17 @@ class GTP3 {
 
                 try {
                     console.log("Sending prompt:", this.prompt);
-                    const response = await openai.complete({
-                        ...Personalities.get(this.personality),
-                        stop: ["You:", "Friend:", "He:", "\n"],
-                        prompt: this.prompt,
-                    });
+                    const outList = await booste.gpt2(process.env.BOOSTE_API_KEY, this.prompt, this.MAX_LENGTH);
+                    const response = outList.join(" ").split("\n")[0];
+                    this.prompt += response;
 
-                    if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
-                        console.log("Response received:", response.data.choices[0]);
-                        this.prompt += response.data.choices[0].text;
-                        const text = response.data.choices[0].text.trim();
-                        if (text.indexOf(":") < 25) {
-                            resolve(text.replace(/^(?!https?)^(?!\s+).*?:/, ""));
+                    console.log("Response received:", response);
+                    const textTrimmed = response;
+                    if (textTrimmed.length > 0) {
+                        if (textTrimmed.indexOf(":") < 25) {
+                            resolve(textTrimmed.replace(/^(?!https?)^(?!\s+).*?:/, ""));
                         } else {
-                            resolve(text);
+                            resolve(textTrimmed);
                         }
                     } else {
                         console.log("Empty response received!");
@@ -65,4 +61,4 @@ class GTP3 {
 
 }
 
-module.exports = GTP3;
+module.exports = GTP2;
