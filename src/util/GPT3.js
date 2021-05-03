@@ -15,7 +15,7 @@ class GTP3 {
                 this.prompt[guildId] = DEFAULT_PROMPT;
             }
 
-            if (newInput.length > 200) {
+            if (newInput.length > 300) {
                 resolve("Sorry, I'm not going to reed a message that long");
             } else {
                 this.prompt[guildId] += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";
