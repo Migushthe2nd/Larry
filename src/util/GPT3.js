@@ -28,7 +28,7 @@ class GTP3 {
                     topP: 1.0,
                     frequencyPenalty: 0.5,
                     presencePenalty: 0.2,
-                    stop: ["\n", "You:"],
+                    stop: ["You:"],
                 });
 
                 if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
