@@ -34,7 +34,7 @@ class GTP3 {
                 if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
                     console.log("Response received:", response.data.choices[0]);
                     this.prompt[guildId] += response.data.choices[0].text;
-                    const text = response.data.choices[0].text;
+                    const text = response.data.choices[0].text.trim();
                     if (text.indexOf(":") < 25) {
                         resolve(text.replace(/.*?:/, ""));
                     } else {
