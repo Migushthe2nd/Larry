@@ -18,7 +18,7 @@ individually. You need to supply your own GPT3 key for this to work. Larry curre
 
 The bot can have different personalities if you modify the source.
 
-[You can view the different personalities here](./PERSONALITIES.md)
+[You can view the different personalities here](./src/GPT3/Personalities.js)
 
 ## Future Improvements
 

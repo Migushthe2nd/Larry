@@ -1,4 +1,9 @@
+/*
+    Here are a few different personalities that can be picked from using the 'personality' command:
+    'cheap' is the default
+ */
 const PERSONALITIES = [
+    // Really follows the conversation and gets confused by random questions, logical answers, can be explicit, less repetitive.
     {
         name: "human",
         preset: {
@@ -10,6 +15,7 @@ const PERSONALITIES = [
             presencePenalty: 1.0,
         },
     },
+    // Works with random questions, is a bit random and repetitive.
     {
         name: "random",
         preset: {
@@ -21,6 +27,7 @@ const PERSONALITIES = [
             presencePenalty: 0.3,
         },
     },
+    // Works does not really follow a conversation. Very good at performing tasks.
     {
         name: "obedient",
         preset: {
@@ -32,6 +39,7 @@ const PERSONALITIES = [
             presencePenalty: 0.0,
         },
     },
+    // Uses the Curie engine. Costs less
     {
         name: "cheap",
         preset: {
