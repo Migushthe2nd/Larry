@@ -25,14 +25,14 @@ class GTP3 {
                 try {
                     console.log("Sending prompt:", this.prompt[guildId]);
                     const response = await openai.complete({
-                        engine: "davinci",
+                        engine: "davinci-instruct-beta",
                         prompt: this.prompt[guildId],
                         temperature: 1.0,
                         maxTokens: 80,
                         topP: 1.0,
                         frequencyPenalty: 1.0,
                         presencePenalty: 1.0,
-                        stop: ["You:", "Friend:", "He:", "She:", "Me:"],
+                        stop: ["You:", "Friend:", "He:", "Me:"],
                     });
 
                     if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
