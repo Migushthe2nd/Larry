@@ -30,7 +30,7 @@ class GTP3 {
                         temperature: 0.8,
                         maxTokens: 80,
                         topP: 1.0,
-                        frequencyPenalty: 0.5,
+                        frequencyPenalty: 0.6,
                         presencePenalty: 0.3,
                         stop: ["You:", "Friend:", "He:", "She:"],
                     });
