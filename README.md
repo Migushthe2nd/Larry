@@ -1,7 +1,8 @@
 # Larry
 
-Larry is a simple Discord bot that interacts with the OpenAI GTP3 API. The bot keeps track of the conversation per guild
-individually. You need to supply your own GPT3 key for this to work. Larry currently
+Larry is a simple Discord bot that interacts with the OpenAI GTP3 API. It also has support for different personalities
+and even GPT2, served by booste. The bot keeps track of the conversation on a per-guild basis. You need to supply your
+own OpenAI and booste API key for this to work.
 
 - only keeps the last 10 lines of a conversation, to limit token usage
 - only reads 300 chars per message
