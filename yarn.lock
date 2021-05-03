@@ -679,6 +679,11 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
+queue-promise@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/queue-promise/-/queue-promise-2.2.0.tgz#b5fe658834a8e67241f7a68f38f7d6f4a251a7d4"
+  integrity sha512-nYEIO/24u+LKQ7uLGKzXEfarHiRsdywfeUGYhTkY56Jux1FhqClF+uf9LDxKJadrWYLnZIKHRQZzmbcT9h7JnQ==
+
 rc@^1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
