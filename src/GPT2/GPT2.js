@@ -1,7 +1,7 @@
 const booste = require("booste");
 
 class GTP2 {
-    MAX_LENGTH = 20;
+    MAX_LENGTH = 15;
     MAX_PROMPT_LINES = 10;
     DEFAULT_PROMPT = "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.";
     prompt = this.DEFAULT_PROMPT;
@@ -20,7 +20,7 @@ class GTP2 {
 
                 try {
                     console.log("Sending prompt:", this.prompt);
-                    const outList = await booste.gpt2(process.env.BOOSTE_API_KEY, this.prompt, this.MAX_LENGTH);
+                    const outList = await booste.gpt2XL(process.env.BOOSTE_API_KEY, this.prompt, this.MAX_LENGTH);
                     const response = outList.join(" ").split("\n")[0];
                     this.prompt += response;
 
