@@ -17,11 +17,9 @@ own OpenAI and booste API key for this to work.
 
 ## Personalities
 
-The bot can have different personalities if you modify the source.
-
+The bot can have different personalities if you modify the source.  
 [You can view the different personalities here](./src/GPT3/Personalities.js)
 
 ## Future Improvements
 
-- Create a command to switch personalities
-- Add toggle to switch between GPT2 and GPT3
+_none left_
