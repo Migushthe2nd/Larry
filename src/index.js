@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Discord = require("discord.js");
 const Queue = require("queue-promise");
-const GPT3 = require("./util/GPT3");
+const GPT3 = require("./GPT3/GPT3");
 const {typingAndResolve} = require("./util/Typing");
 
 const client = new Discord.Client(); // Initiates the client
