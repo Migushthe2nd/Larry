@@ -56,7 +56,7 @@ class GTP2 {
      * Reset the conversation for a specific guild
      */
     reset() {
-        this.prompt = DEFAULT_PROMPT;
+        this.prompt = this.DEFAULT_PROMPT;
     }
 
 }
