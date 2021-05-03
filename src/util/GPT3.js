@@ -32,7 +32,7 @@ class GTP3 {
                         topP: 1.0,
                         frequencyPenalty: 1.0,
                         presencePenalty: 1.0,
-                        stop: ["You:", "Friend:", "He:", "She:"],
+                        stop: ["You:", "Friend:", "He:", "She:", "Me:"],
                     });
 
                     if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
