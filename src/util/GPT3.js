@@ -23,7 +23,7 @@ class GTP3 {
                 const response = await openai.complete({
                     engine: "davinci",
                     prompt: this.prompt[guildId],
-                    temperature: 0.6,
+                    temperature: 0.9,
                     maxTokens: 80,
                     topP: 1.0,
                     frequencyPenalty: 0.5,
@@ -56,7 +56,7 @@ class GTP3 {
      */
     keep20(guildId) {
         const lines = this.prompt[guildId].split("\n").filter((l) => l.length > 0 && l !== "\n");
-        this.prompt[guildId] = lines.slice(-20).join("\n");
+        this.prompt[guildId] = lines.slice(-10).join("\n");
     }
 
     /**
