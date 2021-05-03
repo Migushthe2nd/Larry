@@ -22,7 +22,7 @@ module.exports.gptSwitched = (guildSettings) => {
 module.exports.personalitySwitch = (guildSettings) => {
     return new Discord.MessageEmbed()
         .setColor("#FFA500")
-        .addField("Personality:", `${guildSettings.gpt.personality}`, true);
+        .addField("New Personality:", `${guildSettings.gpt.personality}`, true);
 };
 
 module.exports.help = () => {
