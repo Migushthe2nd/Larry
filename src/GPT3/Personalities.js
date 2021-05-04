@@ -27,7 +27,7 @@ const PERSONALITIES = [
             presencePenalty: 0.3,
         },
     },
-    // Works does not really follow a conversation. Very good at performing tasks.
+    // Does not really follow a conversation. Very good at performing tasks.
     {
         name: "obedient",
         preset: {
@@ -39,7 +39,7 @@ const PERSONALITIES = [
             presencePenalty: 0.0,
         },
     },
-    // Uses the Curie engine. Costs less
+    // Uses the Curie engine. Costs less.
     {
         name: "cheap",
         preset: {

@@ -31,6 +31,6 @@ module.exports.help = () => {
         .setTitle("Command Help")
         .addField("`larry help`", "Show this menu", false)
         .addField("`larry reset`", "Reset the conversation", false)
-        .addField("`larry switch` (default: GPT2)", "Switch between GTP2 and GPT3. Current conversation will be reset.", false)
-        .addField("`larry personality <cheap/random/obedient/human>` (default: cheap)", "Switch the GPT3 personality. Resets on every GPT switch.", false);
+        .addField("`larry switch` (default: GPT3)", "Switch between GTP2 and GPT3. Current conversation will be reset.", false)
+        .addField("`larry personality <cheap/random/obedient/human>` (default: human)", "Switch the GPT3 personality. Resets on every GPT switch.", false);
 };

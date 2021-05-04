@@ -4,12 +4,6 @@ const GPT3 = require("../GPT3/GPT3");
 class GuildSettings {
     gpt = new GPT3();
 
-    // setPersonality(personality) {
-    //     if (this.gpt instanceof GPT3) {
-    //         this.gpt.personality = personality;
-    //     }
-    // };
-
     switchGPTType() {
         if (this.gpt instanceof GPT2) {
             this.gpt = new GPT3();
