@@ -35,8 +35,8 @@ const PERSONALITIES = [
             temperature: 0.3,
             maxTokens: 80,
             topP: 1.0,
-            frequencyPenalty: 0.0,
-            presencePenalty: 0.0,
+            frequencyPenalty: 0.2,
+            presencePenalty: 0.2,
         },
     },
     // Uses the Curie engine. Costs less.
