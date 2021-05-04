@@ -9,10 +9,11 @@ own OpenAI and booste API key for this to work.
 
 ## Commands
 
-- `larry help`: show all available commands
-- `larry reset`: reset the conversation
-- `larry switch`: switch between GTP2 and GPT3 (default: GPT3). Current conversation will be reset.
-- `larry personality <cheap/random/obedient/human>`: switch the GPT3 personality (default: human). Resets on every GPT
+- `larry help`: shows all available commands
+- `larry status`: shows the current configuration
+- `larry reset`: resets the conversation
+- `larry switch`: switches between GTP2 and GPT3 (default: GPT3). Current conversation will be reset.
+- `larry personality <cheap/random/obedient/human>`: switches the GPT3 personality (default: human). Resets on every GPT
   switch.
 
 ## Personalities

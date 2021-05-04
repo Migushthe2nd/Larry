@@ -29,8 +29,9 @@ module.exports.help = () => {
     return new Discord.MessageEmbed()
         .setColor("#FFA500")
         .setTitle("Command Help")
-        .addField("`larry help`", "Show this menu", false)
-        .addField("`larry reset`", "Reset the conversation", false)
-        .addField("`larry switch` (default: GPT3)", "Switch between GTP2 and GPT3. Current conversation will be reset.", false)
-        .addField("`larry personality <cheap/random/obedient/human>` (default: human)", "Switch the GPT3 personality. Resets on every GPT switch.", false);
+        .addField("`larry help`", "Shows this menu", false)
+        .addField("`larry status`", "Shows the current configuration", false)
+        .addField("`larry reset`", "Resets the conversation", false)
+        .addField("`larry switch` (default: GPT3)", "Switches between GTP2 and GPT3. Current conversation will be reset.", false)
+        .addField("`larry personality <cheap/random/obedient/human>` (default: human)", "Switches the GPT3 personality. Resets on every GPT switch.", false);
 };
