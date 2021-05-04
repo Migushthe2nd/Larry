@@ -7,7 +7,7 @@ const Personalities = require("./GPT3/Personalities");
 const GuildSettings = require("./util/GuildSettings");
 const {typingAndResolve} = require("./util/Typing");
 
-const client = new Discord.Client(); // Initiates the client
+const client = new Discord.Client({retryLimit: 10}); // Initiates the client
 require("./util/ExtendedMessage");
 
 client.on("ready", () => {
