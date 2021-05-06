@@ -12,7 +12,7 @@ class GTP2 {
      */
     generateResponse(newInput) {
         return new Promise(async (resolve) => {
-            if (newInput.length > 300) {
+            if (newInput.length > 200) {
                 resolve("Sorry, I'm not going to reed a message that long");
             } else {
                 this.prompt += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";

@@ -4,6 +4,7 @@
  */
 const PERSONALITIES = [
     // Really follows the conversation and gets confused by random questions, logical answers, can be explicit, less repetitive.
+    // Can understand complex wordings.
     {
         name: "human",
         preset: {

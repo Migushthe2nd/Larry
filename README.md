@@ -5,7 +5,7 @@ and even GPT2, served by booste. The bot keeps track of the conversation on a pe
 own OpenAI and booste API key for this to work.
 
 - only keeps the last 10 lines of a conversation, to limit token usage
-- only reads 300 chars per message
+- only reads 400 chars per message
 
 ## Commands
 
