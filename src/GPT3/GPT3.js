@@ -3,7 +3,7 @@ const Personalities = require("./Personalities");
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 class GTP3 {
-    MAX_PROMPT_LINES = 10;
+    MAX_PROMPT_LINES = 50;
     DEFAULT_PROMPT = "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.";
     prompt = this.DEFAULT_PROMPT;
     personality = "human";
@@ -49,7 +49,7 @@ class GTP3 {
     }
 
     /**
-     * Keep the last 20 lines of the message. Else it will use too many tokens.
+     * Keep the last MAX_PROMPT_LINES lines of the message. Else it will use too many tokens.
      */
     reducePromptSize() {
         const lines = this.prompt.split("\n").filter((l) => l.length > 0 && l !== "\n");

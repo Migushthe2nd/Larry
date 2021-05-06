@@ -45,7 +45,7 @@ class GTP2 {
     }
 
     /**
-     * Keep the last 20 lines of the message. Else it will use too many tokens.
+     * Keep the last MAX_PROMPT_LINES lines of the message. Else it will use too many tokens.
      */
     reducePromptSize() {
         const lines = this.prompt.split("\n").filter((l) => l.length > 0 && l !== "\n");
