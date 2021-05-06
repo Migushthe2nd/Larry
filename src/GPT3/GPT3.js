@@ -3,7 +3,7 @@ const Personalities = require("./Personalities");
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 class GTP3 {
-    MAX_PROMPT_LINES = 50;
+    MAX_PROMPT_LINES = 10;
     DEFAULT_PROMPT = "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.";
     prompt = this.DEFAULT_PROMPT;
     personality = "human";
