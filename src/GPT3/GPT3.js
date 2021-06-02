@@ -31,7 +31,8 @@ class GTP3 {
                         console.log("Response received:", response.data.choices[0]);
                         const text = response.data.choices[0].text;
                         this.prompt += text;
-                        if (text.indexOf(":") < 25) {
+                        // if starts with :, and not discord emoji
+                        if (text.indexOf(":") < 15 && text.substring(0, text.indexOf(":")) === "<") {
                             resolve(text.replace(/.*?(?<!\s)(?<!https)(?<!http):/, ""));
                         } else {
                             resolve(text);
