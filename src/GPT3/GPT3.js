@@ -32,7 +32,7 @@ class GTP3 {
                         const text = response.data.choices[0].text;
                         this.prompt += text;
                         // if starts with :, and not discord emoji
-                        if (text.indexOf(":") < 15 && text.substring(0, text.indexOf(":")) === "<") {
+                        if (text.indexOf(":") < 15 && text.substring(0, text.indexOf(":")).endsWith("<")) {
                             resolve(text.replace(/.*?(?<!\s)(?<!https)(?<!http):/, ""));
                         } else {
                             resolve(text);
