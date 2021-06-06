@@ -9,7 +9,7 @@ const GuildSettings = require("./util/GuildSettings");
 const vader = require("vader-sentiment");
 const {typingAndResolve} = require("./util/Typing");
 const {MsEdgeTTS} = require("msedge-tts");
-
+const xmlescape = require('xml-escape');
 const client = new Discord.Client({retryLimit: 10}); // Initiates the client
 new DiscordSR(client);
 require("./util/ExtendedMessage");
@@ -101,7 +101,7 @@ client.on("speech", async (message) => {
             const readable = tts.toStream(`
                 <prosody pitch="+0Hz" rate="+2%" volume="+0%">
                     <mstts:express-as style="${style.style}" styledegree="${style.degree}">
-                        ${resp}
+                        ${xmlescape(resp)}
                     </mstts:express-as>
                 </prosody> 
             `);
