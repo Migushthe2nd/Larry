@@ -95,11 +95,11 @@ client.on("speech", async (message) => {
             const resp = await guild.larry.gpt.generateResponse(text + "\n");
 
             const tts = new MsEdgeTTS();
-            await tts.setMetadata("en-US-GuyNeural", MsEdgeTTS.OUTPUT_FORMATS.WEBM_24KHZ_16BIT_MONO_OPUS);
+            await tts.setMetadata("en-US-AriaNeural", MsEdgeTTS.OUTPUT_FORMATS.WEBM_24KHZ_16BIT_MONO_OPUS);
 
             const style = inferVoiceStyle(text);
             const readable = tts.toStream(`
-                <prosody pitch="+0Hz" rate="+2%" volume="+0%">
+                <prosody pitch="-25Hz" rate="+2%" volume="-5%">
                     <mstts:express-as style="${style.style}" styledegree="${style.degree}">
                         ${xmlescape(resp)}
                     </mstts:express-as>
@@ -136,9 +136,9 @@ const inferVoiceStyle = (text) => {
         case "neg":
             return {style: "empathetic", degree: 2};
         case "neu":
-            return {style: "empathetic", degree: 1};
+            return {style: "chat", degree: 0.25};
         case "pos":
-            return {style: "cheerful", degree: 1};
+            return {style: "cheerful", degree: 0.5};
     }
 };
 
