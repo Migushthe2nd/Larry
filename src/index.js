@@ -63,7 +63,7 @@ client.on("message", async (message) => {
         } else if (textLower === "larry help") {
             await message.channel.send(Embeds.help());
         } else if (textLower === "larry leave") {
-            const voiceChannel = await guild.me.voice?.channel;
+            const voiceChannel = await guild.me.voice && guild.me.voice.channel;
             if (voiceChannel) {
                 await voiceChannel.leave();
                 clearLeaveTimer(guild);
@@ -121,8 +121,10 @@ const clearLeaveTimer = (guild) => {
 const setLeaveTimer = (guild) => {
     clearLeaveTimer(guild);
     guild.leaveTimer = setTimeout(async () => {
-        const voiceChannel = await guild.me.voice.channel;
-        voiceChannel.leave();
+        if (guild.me.voice && guild.me.voice.channel) {
+            const voiceChannel = await guild.me.voice.channel;
+            voiceChannel.leave();
+        }
     }, 10 * 60 * 1000);
 };
 
