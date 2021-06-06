@@ -9,7 +9,7 @@ const GuildSettings = require("./util/GuildSettings");
 const vader = require("vader-sentiment");
 const {typingAndResolve} = require("./util/Typing");
 const {MsEdgeTTS} = require("msedge-tts");
-const xmlescape = require('xml-escape');
+const xmlescape = require("xml-escape");
 const client = new Discord.Client({retryLimit: 10}); // Initiates the client
 new DiscordSR(client);
 require("./util/ExtendedMessage");
@@ -92,14 +92,15 @@ client.on("speech", async (message) => {
 
     if (text && text.trim().length > 0) {
         try {
-            const resp = await guild.larry.gpt.generateResponse(text + "\n");
+            const resp = (await guild.larry.gpt.generateResponse(text + "\n"))
+                .replace(/[(<](.*?)[)>]/gm, ""); // replace anything between brackets
 
             const tts = new MsEdgeTTS();
-            await tts.setMetadata("en-US-AriaNeural", MsEdgeTTS.OUTPUT_FORMATS.WEBM_24KHZ_16BIT_MONO_OPUS);
+            await tts.setMetadata("en-GB-RyanNeural", MsEdgeTTS.OUTPUT_FORMATS.WEBM_24KHZ_16BIT_MONO_OPUS);
 
             const style = inferVoiceStyle(text);
             const readable = tts.toStream(`
-                <prosody pitch="-25Hz" rate="+2%" volume="-5%">
+                <prosody pitch="${style.pitch}" rate="${style.rate}" volume="${style.volume}">
                     <mstts:express-as style="${style.style}" styledegree="${style.degree}">
                         ${xmlescape(resp)}
                     </mstts:express-as>
@@ -134,11 +135,11 @@ const inferVoiceStyle = (text) => {
     const highestKey = Object.entries(intensity).reduce((a, b) => a[1] > b[1] ? a : b)[0];
     switch (highestKey) {
         case "neg":
-            return {style: "empathetic", degree: 2};
+            return {style: "", degree: 1, pitch: "-5Hz", rate: "-5%", volume: "+10%"};
         case "neu":
-            return {style: "chat", degree: 0.25};
+            return {style: "newscast", degree: 0.25, pitch: "+0Hz", rate: "-5%", volume: "-5%"};
         case "pos":
-            return {style: "cheerful", degree: 0.5};
+            return {style: "newscast", degree: 2, pitch: "+4Hz", rate: "+2%", volume: "+0%"};
     }
 };
 
