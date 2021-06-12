@@ -84,7 +84,7 @@ const PERSONALITIES = [
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
         cleanOutput(output) {
             // also start the first line with a >
-            return "> " + output;
+            return "> " + output.replace(/^\n/, '');
         },
         noResponse: "_no output_",
         preset: {
