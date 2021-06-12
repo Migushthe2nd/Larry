@@ -84,7 +84,7 @@ const PERSONALITIES = [
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n",
         cleanOutput(output) {
             // if the server generates a $ sign, remove it
-            return output.replace(/\n\n$/gm, "").replace(/\n/gm, " ");
+            return output.replace(/\n\n$/gm, "");
         },
         noResponse: "_no output_",
         preset: {
