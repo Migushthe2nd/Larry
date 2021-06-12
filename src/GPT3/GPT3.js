@@ -5,7 +5,7 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 class GTP3 {
     MAX_PROMPT_LINES = 10;
     prompt;
-    personality = "human";
+    personality = "terminal";
 
     /**
      * Generate a new response for a conversation
@@ -17,12 +17,10 @@ class GTP3 {
             if (newInput.length > 300) {
                 resolve("Sorry, I'm not going to reed a message that long");
             } else {
-                console.log(JSON.stringify({newInput}))
                 this.prompt += personality.newInput(newInput);
                 this.reducePromptSize();
 
                 try {
-                    console.log("Sending prompt:", this.prompt);
                     const response = await openai.complete({
                         ...(personality.preset),
                         stop: personality.stop,
@@ -50,8 +48,9 @@ class GTP3 {
      * Keep the last MAX_PROMPT_LINES lines of the message. Else it will use too many tokens.
      */
     reducePromptSize() {
+        let appendEnter = this.prompt.endsWith("\n");
         const lines = this.prompt.split("\n").filter((l) => l.length > 0 && l !== "\n");
-        this.prompt = lines.slice(-this.MAX_PROMPT_LINES).join("\n");
+        this.prompt = lines.slice(-this.MAX_PROMPT_LINES).join("\n") + (appendEnter ? "\n" : "");
     }
 
     /**

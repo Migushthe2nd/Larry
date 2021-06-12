@@ -7,7 +7,7 @@ const PERSONALITIES = [
     // Can understand complex wordings.
     {
         name: "human",
-        prompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
+        startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output) {
