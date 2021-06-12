@@ -5,7 +5,7 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 class GTP3 {
     MAX_PROMPT_LINES = 10;
     prompt;
-    personality = "human";
+    personality = "terminal";
 
     /**
      * Generate a new response for a conversation
@@ -14,9 +14,10 @@ class GTP3 {
         const personality = Personalities.get(this.personality);
         if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
-            if (newInput.length > 400) {
+            if (newInput.length > 300) {
                 resolve("Sorry, I'm not going to reed a message that long");
             } else {
+                console.log(JSON.stringify({newInput}))
                 this.prompt += personality.newInput(newInput);
                 this.reducePromptSize();
 

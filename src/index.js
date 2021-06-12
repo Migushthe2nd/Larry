@@ -79,7 +79,7 @@ client.on("message", async (message) => {
             }
         } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
             queue.enqueue(async () => {
-                const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, "") + "\n"));
+                const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, "")));
                 await message.inlineReply(resp.replace(/\.$/, ""), {allowedMentions: {repliedUser: false}});
             });
         }
@@ -92,7 +92,7 @@ client.on("speech", async (message) => {
 
     if (text && text.trim().length > 0) {
         try {
-            const resp = (await guild.larry.gpt.generateResponse(text + "\n"))
+            const resp = (await guild.larry.gpt.generateResponse(text))
                 .replace(/[(<](.*?)[)>]/gm, ""); // replace anything between brackets
 
             const tts = new MsEdgeTTS();

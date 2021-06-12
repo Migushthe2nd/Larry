@@ -76,12 +76,12 @@ const PERSONALITIES = [
     // Does not really follow a conversation. Very good at performing tasks.
     {
         name: "terminal",
-        startPrompt: "The following is terminal input and output\n\n$ ls\nout: GHunt  apps  file  smart-url-fuzzer\n$ which nano\nout: /usr/bin/nano",
-        stop: ["\n"],
+        startPrompt: "The following is terminal input and output\n\n$ ls /etc\n/etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n/usr/bin/nano",
+        stop: ["$"],
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n",
         cleanOutput(output) {
             // if the server generates a $ sign, remove it
-            return output.replace(/\n?\$$/gm, "");
+            return output.replace(/\n\n$/gm, "").replace(/\n/gm, " ");
         },
         preset: {
             engine: "davinci",
