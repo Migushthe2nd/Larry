@@ -79,12 +79,12 @@ const PERSONALITIES = [
     // Does not really follow a conversation. Very good at performing tasks.
     {
         name: "terminal",
-        startPrompt: "The following is terminal input and output\n\n$ ls /etc\n/etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n/usr/bin/nano",
+        startPrompt: "The following is terminal input and output\n\n$ ls /etc\n> /etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n> /usr/bin/nano\n$ git add --all\n> Added new file.",
         stop: ["$"],
-        newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n",
+        newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
         cleanOutput(output) {
-            // if the server generates a $ sign, remove it
-            return output.replace(/\n\n$/gm, "");
+            // also start the first line with a >
+            return "> " + output;
         },
         noResponse: "_no output_",
         preset: {
