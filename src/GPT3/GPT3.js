@@ -36,7 +36,7 @@ class GTP3 {
                         resolve(personality.cleanOutput(text));
                     } else {
                         console.log("Empty response received!");
-                        resolve("Sorry, I don't have an answer to that");
+                        resolve(personality.noResponse);
                     }
                 } catch (e) {
                     console.error(e.response.data);

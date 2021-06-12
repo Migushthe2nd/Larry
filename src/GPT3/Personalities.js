@@ -18,6 +18,7 @@ const PERSONALITIES = [
                 return output;
             }
         },
+        noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci",
             temperature: 1.0,
@@ -41,6 +42,7 @@ const PERSONALITIES = [
                 return output;
             }
         },
+        noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci",
             temperature: 0.8,
@@ -64,6 +66,7 @@ const PERSONALITIES = [
                 return output;
             }
         },
+        noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci-instruct-beta",
             temperature: 0.3,
@@ -83,6 +86,7 @@ const PERSONALITIES = [
             // if the server generates a $ sign, remove it
             return output.replace(/\n\n$/gm, "").replace(/\n/gm, " ");
         },
+        noResponse: "_no output_",
         preset: {
             engine: "davinci",
             temperature: 0.3,
@@ -106,6 +110,7 @@ const PERSONALITIES = [
                 return output;
             }
         },
+        noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "curie",
             temperature: 1.0,
