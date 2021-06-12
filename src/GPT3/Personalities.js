@@ -80,7 +80,7 @@ const PERSONALITIES = [
     {
         name: "terminal",
         startPrompt: "The following is terminal input and output\n\n$ ls /etc\n> /etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n> /usr/bin/nano\n$ git add --all\n> Added new file.",
-        stop: ["$"],
+        stop: ["\n$", "\n#"],
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
         cleanOutput(output) {
             // also start the first line with a >
