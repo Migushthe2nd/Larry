@@ -51,7 +51,7 @@ client.on("message", async (message) => {
             } else {
                 const newPersonality = args[2];
                 if (!Personalities.get(newPersonality)) {
-                    await message.channel.send("Invalid personality. Available options: cheap, random, obedient, human");
+                    await message.channel.send(`Invalid personality. Available options: ${Personalities.NAME_LIST}`);
                 } else {
                     guild.larry.gpt.personality = newPersonality;
                     await message.channel.send(Embeds.personalitySwitch(guild.larry));

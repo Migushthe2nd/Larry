@@ -4,26 +4,27 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 class GTP3 {
     MAX_PROMPT_LINES = 10;
-    DEFAULT_PROMPT = "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.";
-    prompt = this.DEFAULT_PROMPT;
+    prompt;
     personality = "human";
 
     /**
      * Generate a new response for a conversation
      */
     generateResponse(newInput) {
+        const personality = Personalities.get(this.personality);
+        if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
             if (newInput.length > 400) {
                 resolve("Sorry, I'm not going to reed a message that long");
             } else {
-                this.prompt += "\nYou: " + newInput.replace(/\n/gm, " ") + "\nFriend:";
+                this.prompt += personality.newInput(newInput);
                 this.reducePromptSize();
 
                 try {
                     console.log("Sending prompt:", this.prompt);
                     const response = await openai.complete({
-                        ...Personalities.get(this.personality),
-                        stop: ["You:", "Friend:", "He:", "\n"],
+                        ...(personality.preset),
+                        stop: personality.stop,
                         prompt: this.prompt,
                     });
 
@@ -31,12 +32,7 @@ class GTP3 {
                         console.log("Response received:", response.data.choices[0]);
                         const text = response.data.choices[0].text;
                         this.prompt += text;
-                        // if starts with :, and not discord emoji
-                        if (text.indexOf(":") < 15 && text.substring(0, text.indexOf(":")).endsWith("<")) {
-                            resolve(text.replace(/.*?(?<!\s)(?<!https)(?<!http):/, ""));
-                        } else {
-                            resolve(text);
-                        }
+                        resolve(personality.cleanOutput(text));
                     } else {
                         console.log("Empty response received!");
                         resolve("Sorry, I don't have an answer to that");
@@ -61,7 +57,7 @@ class GTP3 {
      * Reset the conversation for a specific guild
      */
     reset() {
-        this.prompt = this.DEFAULT_PROMPT;
+        this.prompt = Personalities.get(this.personality).startPrompt;
     }
 
 }
