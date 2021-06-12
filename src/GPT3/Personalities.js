@@ -78,7 +78,7 @@ const PERSONALITIES = [
         name: "terminal",
         startPrompt: "The following is terminal input and output\n\n$ ls\nout: GHunt  apps  file  smart-url-fuzzer\n$ which nano\nout: /usr/bin/nano",
         stop: ["\n"],
-        newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\nout:",
+        newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n",
         cleanOutput(output) {
             // if the server generates a $ sign, remove it
             return output.replace(/\n?\$$/gm, "");
