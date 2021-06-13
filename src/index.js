@@ -59,7 +59,7 @@ client.on("message", async (message) => {
             }
         } else if (textLower === "larry reset") {
             guild.larry.gpt.reset();
-            await message.channel.send("Aight, I'm ready for something new");
+            await message.channel.send(Embeds.reset());
         } else if (textLower === "larry help") {
             await message.channel.send(Embeds.help());
         } else if (textLower === "larry leave") {

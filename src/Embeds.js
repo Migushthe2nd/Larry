@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.status = (guildSettings) => {
     const embed = new Discord.MessageEmbed()
-        .setColor("#FFA500")
+        .setColor("#37de31")
         .setTitle("Status")
         .addField("Using:", `${guildSettings.gpt.constructor.name}`, true);
 
@@ -12,6 +12,13 @@ module.exports.status = (guildSettings) => {
 
     return embed;
 };
+
+module.exports.reset = () => {
+    return new Discord.MessageEmbed()
+        .setColor("#FF0000")
+        .setDescription("_Conversation reset_")
+};
+
 
 module.exports.gptSwitched = (guildSettings) => {
     return new Discord.MessageEmbed()
