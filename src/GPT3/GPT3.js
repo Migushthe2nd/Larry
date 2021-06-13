@@ -5,7 +5,7 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 class GTP3 {
     MAX_PROMPT_LINES = 10;
     prompt;
-    personality = "terminal";
+    personality = "human";
 
     /**
      * Generate a new response for a conversation
