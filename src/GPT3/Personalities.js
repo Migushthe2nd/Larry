@@ -105,10 +105,10 @@ const PERSONALITIES = [
         noResponse: "_no output_",
         preset: {
             engine: "davinci-instruct-beta",
-            temperature: 0.3,
+            temperature: 0.15,
             maxTokens: 120,
             topP: 1.0,
-            frequencyPenalty: 1,
+            frequencyPenalty: 0.8,
             presencePenalty: 0.1,
         },
     },
