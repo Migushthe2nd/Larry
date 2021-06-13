@@ -32,11 +32,15 @@ class GTP3 {
                         console.log("Response received:", response.data.choices[0]);
                         const text = response.data.choices[0].text;
                         this.prompt += text;
-                        resolve(personality.cleanOutput(text));
-                    } else {
-                        console.log("Empty response received!");
-                        resolve(personality.noResponse);
+                        const clean = personality.cleanOutput(text);
+                        if (clean.trim().length > 0) {
+                            resolve(clean);
+                            return;
+                        }
                     }
+
+                    console.log("Empty response received!");
+                    resolve(personality.noResponse);
                 } catch (e) {
                     console.error(e.response.data);
                     resolve("Sorry, I'm not really in the mood to talk");
