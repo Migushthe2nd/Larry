@@ -16,12 +16,14 @@ module.exports.status = (guildSettings) => {
 module.exports.gptSwitched = (guildSettings) => {
     return new Discord.MessageEmbed()
         .setColor("#FFA500")
+        .setDescription("_Conversation reset_")
         .addField("Now Using:", `${guildSettings.gpt.constructor.name}`, true);
 };
 
 module.exports.personalitySwitch = (guildSettings) => {
     return new Discord.MessageEmbed()
         .setColor("#FFA500")
+        .setDescription("_Conversation reset_")
         .addField("New Personality:", `${guildSettings.gpt.personality}`, true);
 };
 
