@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.status = (guildSettings) => {
     const embed = new Discord.MessageEmbed()
-        .setColor("#37de31")
+        .setColor("#17d711")
         .setTitle("Status")
         .addField("Using:", `${guildSettings.gpt.constructor.name}`, true);
 
