@@ -15,7 +15,7 @@ module.exports.status = (guildSettings) => {
 
 module.exports.reset = () => {
     return new Discord.MessageEmbed()
-        .setColor("#FF0000")
+        .setColor("#e50b0b")
         .setDescription("_Conversation reset_")
 };
 
