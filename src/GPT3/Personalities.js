@@ -9,6 +9,7 @@ const PERSONALITIES = [
         name: "human",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
+        maxPromptLines: 8,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output) {
             // if starts with :, and not discord emoji
@@ -22,7 +23,7 @@ const PERSONALITIES = [
         preset: {
             engine: "davinci",
             temperature: 1.0,
-            maxTokens: 80,
+            maxTokens: 60,
             topP: 1.0,
             frequencyPenalty: 1.0,
             presencePenalty: 1.0,
@@ -33,6 +34,7 @@ const PERSONALITIES = [
         name: "random",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
+        maxPromptLines: 8,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output) {
             // if starts with :, and not discord emoji
@@ -46,7 +48,7 @@ const PERSONALITIES = [
         preset: {
             engine: "davinci",
             temperature: 0.8,
-            maxTokens: 80,
+            maxTokens: 60,
             topP: 1.0,
             frequencyPenalty: 0.6,
             presencePenalty: 0.3,
@@ -57,6 +59,7 @@ const PERSONALITIES = [
         name: "obedient",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
+        maxPromptLines: 8,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output) {
             // if starts with :, and not discord emoji
@@ -70,7 +73,7 @@ const PERSONALITIES = [
         preset: {
             engine: "davinci-instruct-beta",
             temperature: 0.3,
-            maxTokens: 80,
+            maxTokens: 60,
             topP: 1.0,
             frequencyPenalty: 0.3,
             presencePenalty: 0.2,
@@ -80,20 +83,33 @@ const PERSONALITIES = [
     {
         name: "terminal",
         startPrompt: "The following is terminal input and output\n\n$ ls /etc\n> /etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n> /usr/bin/nano\n$ git add --all\n> Added new file.",
-        stop: ["\n$", "\n#"],
+        stop: ["\n$"],
+        maxPromptLines: 4,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
         cleanOutput(output) {
             // also start the first line with a >
-            return "> " + output.replace(/^\n/, '');
+            const newLines = [];
+            output.trim().split("\n").forEach((line) => {
+                const newLine = line
+                    .replace(/^([>#])\s?/i, "") // existing > or #
+                    .replace(/^\s/g, "⠀") // leading space is empty braille
+                    .replace(/.+?@.+:.+\$/i, "") // user path etc (user@computer:~/directory$)
+                    .replace(/\\/g, "\\\\")
+                    .replace(/:/g, "\\:")
+                    .trim();
+                if (newLine.length > 0) newLines.push("> " + newLine);
+            });
+
+            return newLines.join("\n");
         },
         noResponse: "_no output_",
         preset: {
-            engine: "davinci",
+            engine: "davinci-instruct-beta",
             temperature: 0.3,
-            maxTokens: 60,
+            maxTokens: 120,
             topP: 1.0,
-            frequencyPenalty: 0.0,
-            presencePenalty: 0.0,
+            frequencyPenalty: 1,
+            presencePenalty: 0.1,
         },
     },
     // Uses the Curie engine. Costs less.
@@ -101,6 +117,7 @@ const PERSONALITIES = [
         name: "cheap",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
+        maxPromptLines: 8,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output) {
             // if starts with :, and not discord emoji
@@ -114,7 +131,7 @@ const PERSONALITIES = [
         preset: {
             engine: "curie",
             temperature: 1.0,
-            maxTokens: 80,
+            maxTokens: 60,
             topP: 1.0,
             frequencyPenalty: 1.0,
             presencePenalty: 1.0,

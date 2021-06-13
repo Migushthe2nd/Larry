@@ -53,7 +53,7 @@ client.on("message", async (message) => {
                 if (!Personalities.get(newPersonality)) {
                     await message.channel.send(`Invalid personality. Available options: ${Personalities.NAME_LIST}`);
                 } else {
-                    guild.larry.gpt.personality = newPersonality;
+                    guild.larry.gpt.setPersonality(newPersonality);
                     await message.channel.send(Embeds.personalitySwitch(guild.larry));
                 }
             }

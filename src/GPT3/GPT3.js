@@ -5,13 +5,13 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 class GTP3 {
     MAX_PROMPT_LINES = 10;
     prompt;
-    personality = "human";
+    personality = "terminal";
 
     /**
      * Generate a new response for a conversation
      */
     generateResponse(newInput) {
-        const personality = Personalities.get(this.personality);
+        const personality = this._getPersonality();
         if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
             if (newInput.length > 300) {
@@ -21,6 +21,7 @@ class GTP3 {
                 this.reducePromptSize();
 
                 try {
+                    console.log("Sending prompt:", this.prompt);
                     const response = await openai.complete({
                         ...(personality.preset),
                         stop: personality.stop,
@@ -45,19 +46,37 @@ class GTP3 {
     }
 
     /**
+     * Get the whole personality object.
+     * @private
+     */
+    _getPersonality() {
+        return Personalities.get(this.personality);
+    }
+
+    /**
      * Keep the last MAX_PROMPT_LINES lines of the message. Else it will use too many tokens.
      */
     reducePromptSize() {
         let appendEnter = this.prompt.endsWith("\n");
         const lines = this.prompt.split("\n").filter((l) => l.length > 0 && l !== "\n");
-        this.prompt = lines.slice(-this.MAX_PROMPT_LINES).join("\n") + (appendEnter ? "\n" : "");
+        this.prompt = lines.slice(-this._getPersonality().maxPromptLines).join("\n") + (appendEnter ? "\n" : "");
     }
 
     /**
      * Reset the conversation for a specific guild
      */
     reset() {
-        this.prompt = Personalities.get(this.personality).startPrompt;
+        this.prompt = this._getPersonality().startPrompt;
+    }
+
+    /**
+     * Set the personality of the GPT3 system. Also resets the history
+     *
+     * @param personality string with the new personality name from Personalities.js
+     */
+    setPersonality(personality) {
+        this.personality = personality;
+        this.reset();
     }
 
 }
