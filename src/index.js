@@ -23,6 +23,8 @@ const queue = new Queue({
     interval: 2000,
 });
 
+const PREFIX = "larry";
+
 client.on("message", async (message) => {
     const text = message.content;
     const textLower = message.content.toLowerCase();
@@ -37,47 +39,53 @@ client.on("message", async (message) => {
         if (!guild.larry) guild.larry = new GuildSettings();
 
         // Handle message
-        if (textLower === "larry status") {
-            await message.channel.send(Embeds.status(guild.larry));
-        } else if (textLower === "larry switch") {
-            guild.larry.switchGPTType();
-            await message.channel.send(Embeds.gptSwitched(guild.larry));
-        } else if (textLower.startsWith("larry personality")) {
-            const args = textLower.split(" ");
-            if (!(guild.larry.gpt instanceof GPT3)) {
-                await message.channel.send("Only GPT3 supports personality switching");
-            } else if (args.length < 3) {
-                await message.channel.send(Embeds.invalidPersonality());
-            } else {
-                const newPersonality = args[2];
-                if (!Personalities.get(newPersonality)) {
+        if (textLower.startsWith(PREFIX)) {
+            // Command
+            const commandArgs = message.content.slice(PREFIX.length).trim().split(" ");
+            const command = input.shift();
+
+            if (command === "status") {
+                await message.channel.send(Embeds.status(guild.larry));
+            } else if (command === "switch") {
+                guild.larry.switchGPTType();
+                await message.channel.send(Embeds.gptSwitched(guild.larry));
+            } else if (command === "personality") {
+                if (!(guild.larry.gpt instanceof GPT3)) {
+                    await message.channel.send("Only GPT3 supports personality switching");
+                } else if (commandArgs.length === 0) {
                     await message.channel.send(Embeds.invalidPersonality());
                 } else {
-                    guild.larry.gpt.setPersonality(newPersonality);
-                    await message.channel.send(Embeds.personalitySwitch(guild.larry));
+                    const newPersonality = commandArgs[0];
+                    if (!Personalities.get(newPersonality)) {
+                        await message.channel.send(Embeds.invalidPersonality());
+                    } else {
+                        guild.larry.gpt.setPersonality(newPersonality);
+                        await message.channel.send(Embeds.personalitySwitch(guild.larry));
+                    }
+                }
+            } else if (command === "reset") {
+                guild.larry.gpt.reset();
+                await message.channel.send(Embeds.reset());
+            } else if (command === "help") {
+                await message.channel.send(Embeds.help());
+            } else if (command === "leave") {
+                const voiceChannel = await guild.me.voice && guild.me.voice.channel;
+                if (voiceChannel) {
+                    await voiceChannel.leave();
+                    clearLeaveTimer(guild);
+                } else {
+                    await message.channel.send(Embeds.notInVcYet());
+                }
+            } else if (command === "join") {
+                if (message.member.voice.channel) {
+                    guild.voiceConnetion = await message.member.voice.channel.join();
+                    setLeaveTimer(guild);
+                } else {
+                    await message.channel.send(Embeds.joinVcFirst());
                 }
             }
-        } else if (textLower === "larry reset") {
-            guild.larry.gpt.reset();
-            await message.channel.send(Embeds.reset());
-        } else if (textLower === "larry help") {
-            await message.channel.send(Embeds.help());
-        } else if (textLower === "larry leave") {
-            const voiceChannel = await guild.me.voice && guild.me.voice.channel;
-            if (voiceChannel) {
-                await voiceChannel.leave();
-                clearLeaveTimer(guild);
-            } else {
-                await message.channel.send(Embeds.notInVcYet());
-            }
-        } else if (textLower === "larry join") {
-            if (message.member.voice.channel) {
-                guild.voiceConnetion = await message.member.voice.channel.join();
-                setLeaveTimer(guild);
-            } else {
-                await message.channel.send(Embeds.joinVcFirst());
-            }
         } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
+            // Generate response
             queue.enqueue(async () => {
                 const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, "")));
                 await message.inlineReply(resp.replace(/\.$/, ""), {allowedMentions: {repliedUser: false}});
