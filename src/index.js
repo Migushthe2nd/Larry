@@ -42,7 +42,7 @@ client.on("message", async (message) => {
         if (textLower.startsWith(PREFIX)) {
             // Command
             const commandArgs = message.content.slice(PREFIX.length).trim().split(" ");
-            const command = input.shift();
+            const command = commandArgs.shift();
 
             if (command === "status") {
                 await message.channel.send(Embeds.status(guild.larry));
