@@ -47,11 +47,11 @@ client.on("message", async (message) => {
             if (!(guild.larry.gpt instanceof GPT3)) {
                 await message.channel.send("Only GPT3 supports personality switching");
             } else if (args.length < 3) {
-                await message.channel.send("No personality supplied");
+                await message.channel.send(Embeds.invalidPersonality());
             } else {
                 const newPersonality = args[2];
                 if (!Personalities.get(newPersonality)) {
-                    await message.channel.send(`Invalid personality. Available options: ${Personalities.NAME_LIST}`);
+                    await message.channel.send(Embeds.invalidPersonality());
                 } else {
                     guild.larry.gpt.setPersonality(newPersonality);
                     await message.channel.send(Embeds.personalitySwitch(guild.larry));
@@ -68,14 +68,14 @@ client.on("message", async (message) => {
                 await voiceChannel.leave();
                 clearLeaveTimer(guild);
             } else {
-                await message.channel.send("I'm not in a voice channel yet");
+                await message.channel.send(Embeds.notInVcYet());
             }
         } else if (textLower === "larry join") {
             if (message.member.voice.channel) {
                 guild.voiceConnetion = await message.member.voice.channel.join();
                 setLeaveTimer(guild);
             } else {
-                await message.channel.send("You need to join a voice channel first!");
+                await message.channel.send(Embeds.joinVcFirst());
             }
         } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
             queue.enqueue(async () => {
@@ -92,7 +92,7 @@ client.on("speech", async (message) => {
 
     if (text && text.trim().length > 0) {
         try {
-            const resp = (await guild.larry.gpt.generateResponse(text))
+            const resp = (await guild.larry.gpt.generateResponse(text, true))
                 .replace(/[(<](.*?)[)>]/gm, ""); // replace anything between brackets
 
             const tts = new MsEdgeTTS();

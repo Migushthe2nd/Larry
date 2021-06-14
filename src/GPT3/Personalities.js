@@ -1,7 +1,12 @@
 /*
     Here are a few different personalities that can be picked from using the 'personality' command:
-    'cheap' is the default
+    'human' is the default
  */
+
+const censorText = (text) => {
+    return text.split("\n").map((line) => "||" + line + "||").join("\n");
+};
+
 const PERSONALITIES = [
     // Really follows the conversation and gets confused by random questions, logical answers, can be explicit, less repetitive.
     // Can understand complex wordings.
@@ -9,24 +14,26 @@ const PERSONALITIES = [
         name: "human",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 8,
+        maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
-        cleanOutput(output) {
-            // if starts with :, and not discord emoji
+        cleanOutput(output, isDisturbing) {
+            let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
-                return output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
+                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
             } else {
-                return output;
+                finalOutput = output;
             }
+
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci",
-            temperature: 1.0,
-            maxTokens: 60,
+            temperature: 0.9,
+            maxTokens: 30,
             topP: 1.0,
-            frequencyPenalty: 1.0,
-            presencePenalty: 1.0,
+            frequencyPenalty: 0.9,
+            presencePenalty: 0.9,
         },
     },
     // Works with random questions, is a bit random and repetitive.
@@ -34,21 +41,23 @@ const PERSONALITIES = [
         name: "random",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 8,
+        maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
-        cleanOutput(output) {
-            // if starts with :, and not discord emoji
+        cleanOutput(output, isDisturbing) {
+            let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
-                return output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
+                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
             } else {
-                return output;
+                finalOutput = output;
             }
+
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci",
             temperature: 0.8,
-            maxTokens: 60,
+            maxTokens: 30,
             topP: 1.0,
             frequencyPenalty: 0.6,
             presencePenalty: 0.3,
@@ -59,21 +68,23 @@ const PERSONALITIES = [
         name: "obedient",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 8,
+        maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
-        cleanOutput(output) {
-            // if starts with :, and not discord emoji
+        cleanOutput(output, isDisturbing) {
+            let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
-                return output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
+                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
             } else {
-                return output;
+                finalOutput = output;
             }
+
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci-instruct-beta",
             temperature: 0.3,
-            maxTokens: 60,
+            maxTokens: 30,
             topP: 1.0,
             frequencyPenalty: 0.3,
             presencePenalty: 0.2,
@@ -86,17 +97,18 @@ const PERSONALITIES = [
         stop: ["\n$"],
         maxPromptLines: 4,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
-        cleanOutput(output) {
-            // also start the first line with a >
+        cleanOutput(output, isDisturbing) {
             const newLines = [];
             output.trim().split("\n").forEach((line) => {
-                const newLine = line
+                let newLine = line
                     .replace(/^([>#])\s?/i, "") // existing > or #
                     .replace(/^\s/g, "⠀") // leading space is empty braille
                     .replace(/.+?@.+:.+\$/i, "") // user path etc (user@computer:~/directory$)
                     .replace(/\\/g, "\\\\")
                     .replace(/:/g, "\\:")
                     .trim();
+                if (isDisturbing) newLine = censorText(newLine);
+
                 if (newLine.length > 0) newLines.push("> " + newLine);
             });
 
@@ -106,32 +118,35 @@ const PERSONALITIES = [
         preset: {
             engine: "davinci-instruct-beta",
             temperature: 0.15,
-            maxTokens: 120,
+            maxTokens: 100,
             topP: 1.0,
             frequencyPenalty: 0.8,
             presencePenalty: 0.1,
         },
     },
-    // Uses the Curie engine. Costs less.
+    // Uses the Curie engine. Costs less. Simpler responses.
     {
-        name: "cheap",
+        name: "simple",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 8,
+        maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
-        cleanOutput(output) {
+        cleanOutput(output, isDisturbing) {
             // if starts with :, and not discord emoji
+            let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
-                return output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
+                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
             } else {
-                return output;
+                finalOutput = output;
             }
+
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "curie",
             temperature: 1.0,
-            maxTokens: 60,
+            maxTokens: 30,
             topP: 1.0,
             frequencyPenalty: 1.0,
             presencePenalty: 1.0,

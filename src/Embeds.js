@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const {NAME_LIST} = require("./GPT3/Personalities");
 
 module.exports.status = (guildSettings) => {
     const embed = new Discord.MessageEmbed()
@@ -16,27 +17,46 @@ module.exports.status = (guildSettings) => {
 module.exports.reset = () => {
     return new Discord.MessageEmbed()
         .setColor("#e50b0b")
-        .setDescription("_Conversation reset_")
+        .setDescription("_Conversation reset_");
 };
 
+module.exports.invalidPersonality = () => {
+    return new Discord.MessageEmbed()
+        .setColor("#e50b0b")
+        .setDescription("_Invalid Personality_")
+        .addField("Example:", `\`larry personality <${NAME_LIST.replace(/,\s/g, "/")}>\``, true);
+};
+
+module.exports.joinVcFirst = () => {
+    return new Discord.MessageEmbed()
+        .setColor("#e50b0b")
+        .setDescription("You need to join a voice channel first!");
+};
+
+module.exports.notInVcYet = () => {
+    return new Discord.MessageEmbed()
+        .setColor("#e50b0b")
+        .setDescription("I'm not in a voice channel yet")
+        .addField("Run `join` first:", `\`larry join\``, true);
+};
 
 module.exports.gptSwitched = (guildSettings) => {
     return new Discord.MessageEmbed()
-        .setColor("#FFA500")
+        .setColor("#00d7ec")
         .setDescription("_Conversation reset_")
         .addField("Now Using:", `${guildSettings.gpt.constructor.name}`, true);
 };
 
 module.exports.personalitySwitch = (guildSettings) => {
     return new Discord.MessageEmbed()
-        .setColor("#FFA500")
+        .setColor("#00d7ec")
         .setDescription("_Conversation reset_")
         .addField("New Personality:", `${guildSettings.gpt.personality}`, true);
 };
 
 module.exports.help = () => {
     return new Discord.MessageEmbed()
-        .setColor("#FFA500")
+        .setColor("#00d7ec")
         .setTitle("Command Help")
         .addField("`larry help`", "Shows this menu", false)
         .addField("`larry status`", "Shows the current configuration", false)
@@ -44,5 +64,5 @@ module.exports.help = () => {
         .addField("`larry switch` (default: GPT3)", "Switches between GTP2 and GPT3. Current conversation will be reset.", false)
         .addField("`larry join`", "Joins your current voice channel. Will use the same message history as the written messages.", false)
         .addField("`larry leave`", "Leaves the voice channel it is currently in.", false)
-        .addField("`larry personality <cheap/random/obedient/human>` (default: human)", "Switches the GPT3 personality. Resets on every GPT switch.", false);
+        .addField(`\`larry personality <${NAME_LIST.replace(/,\s/g, "/")}> (default: human)\``, "Switches the GPT3 personality. Resets on every GPT and personality switch.", false);
 };
