@@ -124,9 +124,7 @@ client.on("speech", async (message) => {
         } catch (e) {
             console.error(e);
         } finally {
-            setTimeout(() => {
-                guild.larry.speechBusy = false;
-            });
+            guild.larry.speechBusy = false;
         }
     }
 });

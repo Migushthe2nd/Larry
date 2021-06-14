@@ -14,6 +14,8 @@ const BAD_WORDS = {
     "moron": LIGHT,
     // Sexual words
     "porn": LIGHT,
+    "nude": LIGHT,
+    "naked": LIGHT,
     "sex": LIGHT,
     "anal": MEDIUM,
     "fag": HEAVY,
@@ -28,6 +30,7 @@ const BAD_WORDS = {
     "cum": MEDIUM,
     "semen": MEDIUM,
     "sperm": MEDIUM,
+    "cbt": MEDIUM,
     // Religion related
     "religion": MEDIUM,
     "christianity": MEDIUM,
