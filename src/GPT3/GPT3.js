@@ -104,7 +104,7 @@ class GPT3 {
     }
 
     static _wordsOnly(text) {
-        return text.replace(/[^A-Za-z' ,.!?]+|(?<=^|\\W)'|'(?=\\W|$)/igm, "");
+        return text.replace(/[^A-Za-z' ,.!?€%$\d]+|(?<=^|\\W)'|'(?=\\W|$)/igm, "");
     }
 
     /**
