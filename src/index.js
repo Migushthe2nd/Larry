@@ -36,7 +36,7 @@ client.on("message", async (message) => {
         await message.reply("I only work in guilds.");
     } else {
         // Generate initial settings
-        if (!guild.larry) guild.larry = new GuildSettings();
+        setInitialSettings(guild);
 
         // Handle message
         if (textLower.startsWith(PREFIX)) {
@@ -98,7 +98,11 @@ client.on("speech", async (message) => {
     const text = message.content;
     const guild = message.guild;
 
-    if (text && text.trim().length > 0) {
+    // Generate initial settings
+    setInitialSettings(guild);
+
+    if (text && text.trim().length > 0 && !guild.larry.speechBusy) {
+        guild.larry.speechBusy = true;
         try {
             const resp = (await guild.larry.gpt.generateResponse(text, true))
                 .replace(/[(<](.*?)[)>]/gm, ""); // replace anything between brackets
@@ -119,17 +123,25 @@ client.on("speech", async (message) => {
             guild.voiceConnetion.play(readable);
         } catch (e) {
             console.error(e);
+        } finally {
+            setTimeout(() => {
+                guild.larry.speechBusy = false;
+            });
         }
     }
 });
 
+const setInitialSettings = (guild) => {
+    if (!guild.larry) guild.larry = new GuildSettings();
+};
+
 const clearLeaveTimer = (guild) => {
-    if (guild.leaveTimer) clearTimeout(guild.leaveTimer);
+    if (guild.larry.leaveTimer) clearTimeout(guild.larry.leaveTimer);
 };
 
 const setLeaveTimer = (guild) => {
     clearLeaveTimer(guild);
-    guild.leaveTimer = setTimeout(async () => {
+    guild.larry.leaveTimer = setTimeout(async () => {
         if (guild.me.voice && guild.me.voice.channel) {
             const voiceChannel = await guild.me.voice.channel;
             voiceChannel.leave();
