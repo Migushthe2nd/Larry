@@ -4,7 +4,7 @@ const {BAD_WORDS} = require("./BadWordsBiases");
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 class GPT3 {
-    static TOXIC_THRESHOLD = -0.150;
+    static TOXIC_THRESHOLD = -0.100;
     static DISTURBING_WARNING = "The following response may be considered disturbing or upsetting\n";
     static PRETTY_DISTURBING_WARNING = "_**Warning:** " + GPT3.DISTURBING_WARNING + "_";
     prompt;
