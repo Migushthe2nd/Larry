@@ -2,10 +2,27 @@
     Here are a few different personalities that can be picked from using the 'personality' command:
     'human' is the default
  */
+const {encode} = require("gpt-3-encoder");
 
 const censorText = (text) => {
-    return text.split("\n").map((line) => "||" + line + "||").join("\n");
+    return text.trim().split("\n").map((line) => "||" + line + "||").join("\n");
 };
+
+const P_LIGHT = 1;
+const P_MEDIUM = 3;
+const P_HEAVY = 5;
+
+const tokenizeToBiases = (obj) => {
+    const tokenized = {};
+    Object.keys(obj).forEach((word) => {
+        encode(word).forEach((token) => {
+            tokenized[token] = obj[word];
+        });
+    });
+    console.log(tokenized);
+    return tokenized;
+};
+module.exports.tokenizeToBiases = tokenizeToBiases;
 
 const PERSONALITIES = [
     // Really follows the conversation and gets confused by random questions, logical answers, can be explicit, less repetitive.
@@ -71,16 +88,12 @@ const PERSONALITIES = [
             "🎵 Is this just fantasy? \n" +
             "Caught in a landside, 🎵 \n" +
             "No escape from reality Open your eyes, \n" +
-            "🎶 Look up to the skies and see, \n" +
-            "🎵 I'm just a poor boy,\n" +
-            "I need no sympathy. 🎵\n" +
+            "🎶 Look up to the skies and see 🎵\n" +
             "Person: Sing believer by imagine dragons\n" +
             "Singer:\n" +
             "🎤 First things first\n" +
             "I'ma say all the words inside my head\n" +
             "🎵 I'm fired up and tired of\n" +
-            "The way that things have been 🎵\n" +
-            "oh-ooh 🎵\n" +
             "The way that things have been\n" +
             "oh-ooh 🎶",
         stop: ["Person:", "Singer:"],
@@ -97,13 +110,18 @@ const PERSONALITIES = [
             return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
+        logitBias: tokenizeToBiases({
+            "🎤": P_LIGHT,
+            "🎵": P_LIGHT,
+            "🎶": P_LIGHT,
+        }),
         preset: {
             engine: "davinci",
             temperature: 0.7,
             maxTokens: 60,
             topP: 1.0,
             frequencyPenalty: 0,
-            presencePenalty: 0,
+            presencePenalty: 0.3,
         },
     },
     // Does not really follow a conversation. Very good at performing tasks.

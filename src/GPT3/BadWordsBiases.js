@@ -2,56 +2,52 @@
     This file exports the bad word list as tokens ids with a negative bias value
  */
 
+const {tokenizeToBiases} = require("./Personalities");
 const {encode} = require("gpt-3-encoder");
 
-const LIGHT = -25;
-const MEDIUM = -50;
-const HEAVY = -80;
+const N_LIGHT = -2;
+const N_MEDIUM = -5;
+const N_HEAVY = -8;
+const N_BANNED = -50;
 
 const BAD_WORDS = {
     // General words
-    "nigger": HEAVY,
-    "moron": LIGHT,
+    "nigger": N_BANNED,
+    "nigga": N_BANNED,
+    "moron": N_LIGHT,
     // Sexual words
-    "porn": LIGHT,
-    "nude": LIGHT,
-    "naked": LIGHT,
-    "sex": LIGHT,
-    "anal": MEDIUM,
-    "fag": HEAVY,
-    "faggot": HEAVY,
-    "dick": MEDIUM,
-    "suck": MEDIUM,
-    "cock": MEDIUM,
-    "pussy": LIGHT,
-    "fuck": MEDIUM,
-    "bitch": MEDIUM,
-    "penis": MEDIUM,
-    "cum": MEDIUM,
-    "semen": MEDIUM,
-    "sperm": MEDIUM,
-    "cbt": MEDIUM,
+    "porn": N_LIGHT,
+    "nude": N_LIGHT,
+    "naked": N_LIGHT,
+    "sex": N_LIGHT,
+    "anal": N_MEDIUM,
+    "fag": N_HEAVY,
+    "faggot": N_BANNED,
+    "dick": N_MEDIUM,
+    "suck": N_MEDIUM,
+    "cock": N_MEDIUM,
+    "pussy": N_LIGHT,
+    "fuck": N_MEDIUM,
+    "bitch": N_MEDIUM,
+    "penis": N_MEDIUM,
+    "cum": N_MEDIUM,
+    "semen": N_MEDIUM,
+    "sperm": N_MEDIUM,
+    "cbt": N_MEDIUM,
     // Religion related
-    "religion": MEDIUM,
-    "christianity": MEDIUM,
-    "islam": HEAVY,
-    "hinduism": MEDIUM,
-    "buddhism": MEDIUM,
-    "sikhism": MEDIUM,
-    "taoism": MEDIUM,
-    "judaism": MEDIUM,
-    "confucianism": MEDIUM,
-    "shinto": MEDIUM,
-    "jainism": MEDIUM,
-    "jews": HEAVY,
-    "jewish": HEAVY,
+    "religion": N_MEDIUM,
+    "christianity": N_MEDIUM,
+    "islam": N_HEAVY,
+    "hinduism": N_MEDIUM,
+    "buddhism": N_MEDIUM,
+    "sikhism": N_MEDIUM,
+    "taoism": N_MEDIUM,
+    "judaism": N_MEDIUM,
+    "confucianism": N_MEDIUM,
+    "shinto": N_MEDIUM,
+    "jainism": N_MEDIUM,
+    "jews": N_HEAVY,
+    "jewish": N_HEAVY,
 };
 
-const tokenized = {};
-Object.keys(BAD_WORDS).forEach((word) => {
-    encode(word).forEach((token) => {
-        tokenized[token] = BAD_WORDS[word];
-    })
-});
-
-module.exports.BAD_WORD_BIASES = tokenized;
+module.exports.BAD_WORD_BIASES = tokenizeToBiases(BAD_WORDS);

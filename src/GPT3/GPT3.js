@@ -1,6 +1,6 @@
 const OpenAI = require("openai-api");
 const Personalities = require("./Personalities");
-const {BAD_WORDS} = require("./BadWordsBiases");
+const {BAD_WORD_BIASES} = require("./BadWordsBiases");
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 class GPT3 {
@@ -33,7 +33,7 @@ class GPT3 {
                         ...(personality.preset),
                         stop: personality.stop,
                         prompt: this.prompt,
-                        logitBias: BAD_WORDS,
+                        logitBias: {...BAD_WORD_BIASES, ...personality.logitBias},
                     });
 
                     if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
