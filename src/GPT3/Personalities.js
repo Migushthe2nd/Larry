@@ -98,12 +98,12 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "davinci-instruct-beta",
-            temperature: 0.6,
-            maxTokens: 50,
+            engine: "davinci",
+            temperature: 0.7,
+            maxTokens: 60,
             topP: 1.0,
-            frequencyPenalty: 0.7,
-            presencePenalty: 0.7,
+            frequencyPenalty: 0,
+            presencePenalty: 0,
         },
     },
     // Does not really follow a conversation. Very good at performing tasks.
