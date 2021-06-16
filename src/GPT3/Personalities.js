@@ -65,10 +65,27 @@ const PERSONALITIES = [
     },
     {
         name: "singer",
-        startPrompt: "Person: Can you sing Bohemian Rhapsody?\nSinger: Is this the real life? Is this just fantasy? Caught in a landside, No escape from reality Open your eyes, Look up to the skies and see, I'm just a poor boy, I need no sympathy.\nPerson: Sing believer\nSinger: First things first, I'ma say all the words inside my head, I'm fired up and tired of, The way that things have been, oh-ooh, The way that things have been, oh-ooh.",
+        startPrompt: "Person: Can you sing Bohemian Rhapsody?\n" +
+            "Singer:\n" +
+            "🎤 Is this the real life? \n" +
+            "🎵 Is this just fantasy? \n" +
+            "Caught in a landside, 🎵 \n" +
+            "No escape from reality Open your eyes, \n" +
+            "🎶 Look up to the skies and see, \n" +
+            "🎵 I'm just a poor boy,\n" +
+            "I need no sympathy. 🎵\n" +
+            "Person: Sing believer by imagine dragons\n" +
+            "Singer:\n" +
+            "🎤 First things first\n" +
+            "I'ma say all the words inside my head\n" +
+            "🎵 I'm fired up and tired of\n" +
+            "The way that things have been 🎵\n" +
+            "oh-ooh 🎵\n" +
+            "The way that things have been\n" +
+            "oh-ooh 🎶",
         stop: ["Person:", "Singer:"],
         maxPromptLines: 6,
-        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:",
+        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:\n",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
