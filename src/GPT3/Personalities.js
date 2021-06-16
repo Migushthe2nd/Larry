@@ -63,13 +63,39 @@ const PERSONALITIES = [
             presencePenalty: 0.3,
         },
     },
+    {
+        name: "singer",
+        startPrompt: "Person: Can you sing Bohemian Rhapsody?\nSinger: Is this the real life? Is this just fantasy? Caught in a landside, No escape from reality Open your eyes, Look up to the skies and see, I'm just a poor boy, I need no sympathy.\nPerson: Sing believer\nSinger: First things first, I'ma say all the words inside my head, I'm fired up and tired of, The way that things have been, oh-ooh, The way that things have been, oh-ooh.",
+        stop: ["Person:", "Singer:"],
+        maxPromptLines: 6,
+        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:",
+        cleanOutput(output, isDisturbing) {
+            let finalOutput;
+            if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
+                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
+            } else {
+                finalOutput = output;
+            }
+
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
+        },
+        noResponse: "Sorry, I don't have an answer to that",
+        preset: {
+            engine: "davinci-instruct-beta",
+            temperature: 0.6,
+            maxTokens: 50,
+            topP: 1.0,
+            frequencyPenalty: 0.7,
+            presencePenalty: 0.7,
+        },
+    },
     // Does not really follow a conversation. Very good at performing tasks.
     {
         name: "obedient",
-        startPrompt: "Person: Give me the first 10 prime numbers?\nRobot: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29.\nPerson: Write an introduction to a letter\nRobot: Dear Dr. Smith, I hereby gladly accept your offer.",
-        stop: ["Person:", "Robot:", "AI:", "\n"],
+        startPrompt: "Person: Give me the first 10 prime numbers?\nAI: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29.\nPerson: Write an introduction to a letter\nAI: Dear Dr. Smith, I hereby gladly accept your offer.",
+        stop: ["Person:", "AI:", "\n"],
         maxPromptLines: 6,
-        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nRobot:",
+        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nAI:",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
