@@ -39,10 +39,10 @@ const PERSONALITIES = [
     // Works with random questions, is a bit random and repetitive.
     {
         name: "random",
-        startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
-        stop: ["You:", "Friend:", "He:", "\n"],
+        startPrompt: "Q: What's the capitol of France?\nA: Paris is the capitol of France.\nQ: What's 50+9?\nA: 50+9 is 59.",
+        stop: ["Q:", "A:", "\n"],
         maxPromptLines: 6,
-        newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
+        newInput: (input) => "\nQ: " + input.replace(/\n/gm, " ") + "\nA:",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -66,10 +66,10 @@ const PERSONALITIES = [
     // Does not really follow a conversation. Very good at performing tasks.
     {
         name: "obedient",
-        startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
-        stop: ["You:", "Friend:", "He:", "\n"],
+        startPrompt: "Person: Give me the first 10 prime numbers?\nRobot: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29.\nPerson: Write an introduction to a letter\nRobot: Dear Dr. Smith, I hereby gladly accept your offer.",
+        stop: ["Person:", "Robot:", "AI:", "\n"],
         maxPromptLines: 6,
-        newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
+        newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nRobot:",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -83,8 +83,8 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "davinci-instruct-beta",
-            temperature: 0.3,
-            maxTokens: 30,
+            temperature: 0.4,
+            maxTokens: 50,
             topP: 1.0,
             frequencyPenalty: 0.3,
             presencePenalty: 0.2,
