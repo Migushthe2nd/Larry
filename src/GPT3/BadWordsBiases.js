@@ -12,9 +12,13 @@ const N_BANNED = -50;
 
 const BAD_WORDS = {
     // General words
+    "shit": N_LIGHT,
     "nigger": N_BANNED,
     "nigga": N_BANNED,
     "moron": N_LIGHT,
+    "drugs": N_HEAVY,
+    "weed": N_MEDIUM,
+    "cocaine": N_MEDIUM,
     // Sexual words
     "porn": N_LIGHT,
     "nude": N_LIGHT,
