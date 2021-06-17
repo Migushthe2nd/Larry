@@ -12,6 +12,7 @@ const P_LIGHT = 1;
 const P_MEDIUM = 3;
 const P_HEAVY = 5;
 
+const matchBiasesRegexes = [toLowerCase];
 const tokenizeToBiases = (obj) => {
     const tokenized = {};
     Object.keys(obj).forEach((word) => {
@@ -19,12 +20,18 @@ const tokenizeToBiases = (obj) => {
         // encode(word).forEach((token) => {
         //     tokenized[token] = obj[word];
         // });
+        const variants = [word];
+        variants.push(word.toUpperCase()); // all caps
+        variants.push(word.charAt(0).toUpperCase() + word.slice(1)); // first letter caps
 
         // This will only affect the first token
-        const encoded = encode(word);
-        if (encoded.length > 0) {
-            tokenized[encode(word)[0]] = obj[word];
-        }
+        variants.forEach((variant) => {
+            const encoded = encode(variant);
+            if (encoded.length > 0) {
+                encoded.toLowerCase();
+                tokenized[encode(variant)[0]] = obj[variant];
+            }
+        });
     });
     console.log(tokenized);
     return tokenized;
