@@ -12,7 +12,6 @@ const P_LIGHT = 1;
 const P_MEDIUM = 3;
 const P_HEAVY = 5;
 
-const matchBiasesRegexes = [toLowerCase];
 const tokenizeToBiases = (obj) => {
     const tokenized = {};
     Object.keys(obj).forEach((word) => {
@@ -28,8 +27,10 @@ const tokenizeToBiases = (obj) => {
         variants.forEach((variant) => {
             const encoded = encode(variant);
             if (encoded.length > 0) {
-                encoded.toLowerCase();
-                tokenized[encode(variant)[0]] = obj[variant];
+                const existing = tokenized[encoded[0]];
+                if (!(existing > 0 && encoded < existing) && !(existing < 0 && encoded > existing)) {
+                    tokenized[encoded[0]] = obj[word];
+                }
             }
         });
     });
