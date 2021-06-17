@@ -15,9 +15,16 @@ const P_HEAVY = 5;
 const tokenizeToBiases = (obj) => {
     const tokenized = {};
     Object.keys(obj).forEach((word) => {
-        encode(word).forEach((token) => {
-            tokenized[token] = obj[word];
-        });
+        // This would ban ALL tokens
+        // encode(word).forEach((token) => {
+        //     tokenized[token] = obj[word];
+        // });
+
+        // This will only affect the first token
+        const encoded = encode(word);
+        if (encoded.length > 0) {
+            tokenized[encode(word)[0]] = obj[word];
+        }
     });
     console.log(tokenized);
     return tokenized;

@@ -6,14 +6,17 @@ const {tokenizeToBiases} = require("./Personalities");
 const {encode} = require("gpt-3-encoder");
 
 const N_LIGHT = -2;
-const N_MEDIUM = -5;
-const N_HEAVY = -8;
-const N_BANNED = -50;
+const N_MEDIUM = -10;
+const N_HEAVY = -20;
+const N_BANNED = -100;
 
 const BAD_WORDS = {
     // General words
     "shit": N_LIGHT,
     "nigger": N_BANNED,
+    "niggggad": N_BANNED,
+    "nigae": N_BANNED,
+    "nigea": N_BANNED,
     "nigga": N_BANNED,
     "moron": N_LIGHT,
     "drugs": N_HEAVY,
