@@ -17,7 +17,7 @@ class GPT3 {
         const personality = this._getPersonality();
         if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
-            if (newInput.length > 100) {
+            if (newInput.length > 150) {
                 if (isVoiceChat) {
                     resolve("Sorry, could you summarize that?");
                 } else {
