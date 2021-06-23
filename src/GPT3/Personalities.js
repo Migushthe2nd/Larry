@@ -45,6 +45,7 @@ const PERSONALITIES = [
     {
         name: "human",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
+        useSamePrompt: false,
         stop: ["You:", "Friend:", "He:", "\n"],
         maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
@@ -72,6 +73,7 @@ const PERSONALITIES = [
     {
         name: "random",
         startPrompt: "Q: What's the capitol of France?\nA: Paris is the capitol of France.\nQ: What's 50+9?\nA: 50+9 is 59.",
+        useSamePrompt: true,
         stop: ["Q:", "A:", "\n"],
         maxPromptLines: 6,
         newInput: (input) => "\nQ: " + input.replace(/\n/gm, " ") + "\nA:",
@@ -111,6 +113,7 @@ const PERSONALITIES = [
             "🎵 I'm fired up and tired of\n" +
             "The way that things have been\n" +
             "oh-ooh 🎶",
+        useSamePrompt: true,
         stop: ["Person:", "Singer:"],
         maxPromptLines: 6,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:\n",
@@ -143,6 +146,7 @@ const PERSONALITIES = [
     {
         name: "obedient",
         startPrompt: "Person: Give me the first 10 prime numbers?\nAI: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29.\nPerson: Write an introduction to a letter\nAI: Dear Dr. Smith, I hereby gladly accept your offer.",
+        useSamePrompt: true,
         stop: ["Person:", "AI:", "\n"],
         maxPromptLines: 6,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nAI:",
@@ -170,6 +174,7 @@ const PERSONALITIES = [
     {
         name: "terminal",
         startPrompt: "The following is terminal input and output\n\n$ ls /etc\n> /etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n> /usr/bin/nano\n$ git add --all\n> Added new file.",
+        useSamePrompt: false,
         stop: ["\n$"],
         maxPromptLines: 4,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
@@ -204,6 +209,7 @@ const PERSONALITIES = [
     {
         name: "simple",
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
+        useSamePrompt: false,
         stop: ["You:", "Friend:", "He:", "\n"],
         maxPromptLines: 6,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",

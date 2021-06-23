@@ -49,6 +49,10 @@ class GPT3 {
                         if (isDisturbing) clean = (isVoiceChat ? GPT3.DISTURBING_WARNING : GPT3.PRETTY_DISTURBING_WARNING) + clean;
                         if (clean.trim().length > 0) {
                             resolve(clean);
+
+                            if (personality.useSamePrompt) {
+                                this.reset();
+                            }
                             return;
                         }
                     }
