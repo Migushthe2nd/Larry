@@ -91,7 +91,7 @@ const PERSONALITIES = [
         preset: {
             engine: "davinci",
             temperature: 0.8,
-            maxTokens: 30,
+            maxTokens: 50,
             topP: 1.0,
             frequencyPenalty: 0.6,
             presencePenalty: 0.3,
