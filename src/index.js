@@ -14,6 +14,8 @@ const client = new Discord.Client({retryLimit: 10}); // Initiates the client
 new DiscordSR(client);
 require("./util/ExtendedMessage");
 
+const botAdminIds = [123859829453357056];
+
 client.on("ready", () => {
     console.log("Bot Started!");
 });
@@ -104,7 +106,7 @@ client.on("speech", async (message) => {
     if (text && text.trim().length > 0 && !guild.larry.speechBusy) {
         guild.larry.speechBusy = true;
         try {
-            const resp = (await guild.larry.gpt.generateResponse(text, true))
+            const resp = (await guild.larry.gpt.generateResponse(text, true, botAdminIds.includes(message.author.id)))
                 .replace(/[(<](.*?)[)>]/gm, ""); // replace anything between brackets
 
             const tts = new MsEdgeTTS();

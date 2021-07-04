@@ -13,11 +13,11 @@ class GPT3 {
     /**
      * Generate a new response for a conversation
      */
-    generateResponse(newInput, isVoiceChat) {
+    generateResponse(newInput, isVoiceChat, isBotAdmin) {
         const personality = this._getPersonality();
         if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
-            if (newInput.length > 150) {
+            if (!isBotAdmin && newInput.length > 150) {
                 if (isVoiceChat) {
                     resolve("Sorry, could you summarize that?");
                 } else {
