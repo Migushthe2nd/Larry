@@ -14,7 +14,7 @@ const client = new Discord.Client({retryLimit: 10}); // Initiates the client
 new DiscordSR(client);
 require("./util/ExtendedMessage");
 
-const botAdminIds = [123859829453357056];
+const botAdminIds = ['123859829453357056'];
 
 client.on("ready", () => {
     console.log("Bot Started!");
@@ -89,7 +89,7 @@ client.on("message", async (message) => {
         } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
             // Generate response
             queue.enqueue(async () => {
-                const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, "")));
+                const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, ""), false, botAdminIds.includes(message.author.id)));
                 await message.inlineReply(resp.replace(/\.$/, ""), {allowedMentions: {repliedUser: false}});
             });
         }
