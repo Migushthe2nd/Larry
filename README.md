@@ -15,8 +15,7 @@ own OpenAI and booste API key for this to work.
 - `larry switch`: switches between GTP2 and GPT3 (default: GPT3). Current conversation will be reset.
 - `larry join`: Joins your current voice channel. Will use the same message history as the written messages.
 - `larry leave`: Leaves the voice channel it is currently in.
-- `larry personality <human/random/obedient/terminal/simple/singer>`: switches the GPT3 personality (default: human). Resets on
-  every GPT and personality switch.
+- `larry personality <human/random/obedient/terminal/simple/singer>`: switches the GPT3 personality (default: human). Current conversation will be reset.
 
 ## Personalities
 

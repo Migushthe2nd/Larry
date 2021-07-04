@@ -64,5 +64,5 @@ module.exports.help = () => {
         .addField("`larry switch` (default: GPT3)", "Switches between GTP2 and GPT3. Current conversation will be reset.", false)
         .addField("`larry join`", "Joins your current voice channel. Will use the same message history as the written messages.", false)
         .addField("`larry leave`", "Leaves the voice channel it is currently in.", false)
-        .addField(`\`larry personality <${NAME_LIST.replace(/,\s/g, "/")}> (default: human)\``, "Switches the GPT3 personality. Resets on every GPT and personality switch.", false);
+        .addField(`\`larry personality <${NAME_LIST.replace(/,\s/g, "/")}> (default: human)\``, "Switches the GPT3 personality. Current conversation will be reset.", false);
 };
