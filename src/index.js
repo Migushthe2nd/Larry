@@ -48,9 +48,11 @@ client.on("message", async (message) => {
 
             if (command === "status") {
                 await message.channel.send(Embeds.status(guild.larry));
+                return;
             } else if (command === "switch") {
                 guild.larry.switchGPTType();
                 await message.channel.send(Embeds.gptSwitched(guild.larry));
+                return;
             } else if (command === "personality") {
                 if (!(guild.larry.gpt instanceof GPT3)) {
                     await message.channel.send("Only GPT3 supports personality switching");
@@ -65,11 +67,14 @@ client.on("message", async (message) => {
                         await message.channel.send(Embeds.personalitySwitch(guild.larry));
                     }
                 }
+                return;
             } else if (command === "reset") {
                 guild.larry.gpt.reset();
                 await message.channel.send(Embeds.reset());
+                return;
             } else if (command === "help") {
                 await message.channel.send(Embeds.help());
+                return;
             } else if (command === "leave") {
                 const voiceChannel = await guild.me.voice && guild.me.voice.channel;
                 if (voiceChannel) {
@@ -78,6 +83,7 @@ client.on("message", async (message) => {
                 } else {
                     await message.channel.send(Embeds.notInVcYet());
                 }
+                return;
             } else if (command === "join") {
                 if (message.member.voice.channel) {
                     guild.voiceConnetion = await message.member.voice.channel.join();
@@ -85,8 +91,11 @@ client.on("message", async (message) => {
                 } else {
                     await message.channel.send(Embeds.joinVcFirst());
                 }
+                return;
             }
-        } else if (message.mentions.has(client.user) && !textLower.startsWith("?")) {
+        }
+
+        if (message.mentions.has(client.user) && !textLower.startsWith("?quote")) {
             // Generate response
             queue.enqueue(async () => {
                 const resp = await typingAndResolve(message.channel, guild.larry.gpt.generateResponse(text.replace(/<@.*?>\s?/gm, ""), false, botAdminIds.includes(message.author.id)));
