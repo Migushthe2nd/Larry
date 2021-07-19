@@ -57,4 +57,4 @@ const BAD_WORDS = {
     "jewish": N_HEAVY,
 };
 
-module.exports.BAD_WORD_BIASES = tokenizeToBiases(BAD_WORDS);
+module.exports.BAD_WORD_BIASES = tokenizeToBiases(BAD_WORDS, false);

@@ -12,7 +12,7 @@ const P_LIGHT = 1;
 const P_MEDIUM = 3;
 const P_HEAVY = 5;
 
-const tokenizeToBiases = (obj) => {
+const tokenizeToBiases = (obj, fullSequences) => {
     const tokenized = {};
     Object.keys(obj).forEach((word) => {
         // This would ban ALL tokens
@@ -25,11 +25,13 @@ const tokenizeToBiases = (obj) => {
 
         // This will only affect the first token
         variants.forEach((variant) => {
-            const encoded = encode(variant);
-            if (encoded.length > 0) {
-                const existing = tokenized[encoded[0]];
-                if (!(existing > 0 && encoded < existing) && !(existing < 0 && encoded > existing)) {
-                    tokenized[encoded[0]] = obj[word];
+            const encodedTokens = encode(variant);
+            if (encodedTokens.length > 0) {
+                const firstToken = encodedTokens[0];
+                const oldWeight = tokenized[firstToken];
+                const newWeight = obj[word];
+                if (!oldWeight || (oldWeight > 0 && newWeight > oldWeight) || (oldWeight < 0 && newWeight < oldWeight)) {
+                    tokenized[firstToken] = obj[word];
                 }
             }
         });
@@ -132,7 +134,7 @@ const PERSONALITIES = [
             "🎤": P_LIGHT,
             "🎵": P_LIGHT,
             "🎶": P_LIGHT,
-        }),
+        }, true),
         preset: {
             engine: "davinci",
             temperature: 0.7,
