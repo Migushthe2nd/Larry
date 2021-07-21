@@ -73,7 +73,7 @@ const PERSONALITIES = [
     },
     // Works with random questions, is a bit random and repetitive.
     {
-        name: "random",
+        name: "qna",
         startPrompt: "Q: What's the capitol of France?\nA: Paris is the capitol of France.\nQ: What's 50+9?\nA: 50+9 is 59.",
         useSamePrompt: true,
         stop: ["Q:", "A:", "\n"],
@@ -180,7 +180,7 @@ const PERSONALITIES = [
         stop: ["\n$"],
         maxPromptLines: 4,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
-        cleanOutput(output, isDisturbing) {
+        cleanOutput(output, _isDisturbing) {
             const newLines = [];
             output.trim().split("\n").forEach((line) => {
                 let newLine = line
@@ -190,7 +190,6 @@ const PERSONALITIES = [
                     .replace(/\\/g, "\\\\")
                     .replace(/:/g, "\\:")
                     .trim();
-                if (isDisturbing) newLine = censorText(newLine);
 
                 if (newLine.length > 0) newLines.push("> " + newLine);
             });
@@ -205,35 +204,6 @@ const PERSONALITIES = [
             topP: 1.0,
             frequencyPenalty: 0.8,
             presencePenalty: 0.1,
-        },
-    },
-    // Uses the Curie engine. Costs less. Simpler responses.
-    {
-        name: "simple",
-        startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
-        useSamePrompt: false,
-        stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 6,
-        newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
-        cleanOutput(output, isDisturbing) {
-            // if starts with :, and not discord emoji
-            let finalOutput;
-            if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
-                finalOutput = output.replace(/.*?(?<!\s)(?<!https)(?<!http):/, "");
-            } else {
-                finalOutput = output;
-            }
-
-            return isDisturbing ? censorText(finalOutput) : finalOutput;
-        },
-        noResponse: "Sorry, I don't have an answer to that",
-        preset: {
-            engine: "curie",
-            temperature: 1.0,
-            maxTokens: 30,
-            topP: 1.0,
-            frequencyPenalty: 1.0,
-            presencePenalty: 1.0,
         },
     },
 ];
