@@ -198,7 +198,7 @@ const PERSONALITIES = [
         },
         noResponse: "_no output_",
         preset: {
-            engine: "davinci-instruct-beta",
+            engine: "davinci-codex",
             temperature: 0.0,
             maxTokens: 100,
             topP: 1.0,
