@@ -63,7 +63,7 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "davinci",
+            engine: "text-davinci-002",
             temperature: 0.9,
             maxTokens: 50,
             topP: 1.0,
@@ -91,7 +91,7 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "davinci",
+            engine: "text-davinci-002",
             temperature: 0.8,
             maxTokens: 50,
             topP: 1.0,
@@ -136,7 +136,7 @@ const PERSONALITIES = [
             "🎶": P_LIGHT,
         }, true),
         preset: {
-            engine: "davinci",
+            engine: "text-davinci-002",
             temperature: 0.7,
             maxTokens: 60,
             topP: 1.0,
@@ -198,7 +198,7 @@ const PERSONALITIES = [
         },
         noResponse: "_no output_",
         preset: {
-            engine: "davinci-codex",
+            engine: "code-davinci-002",
             temperature: 0.0,
             maxTokens: 100,
             topP: 1.0,
