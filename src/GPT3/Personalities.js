@@ -101,14 +101,7 @@ const PERSONALITIES = [
     },
     {
         name: "singer",
-        startPrompt: "Person: Can you sing Bohemian Rhapsody?\n" +
-            "Singer:\n" +
-            "🎤 Is this the real life? \n" +
-            "🎵 Is this just fantasy? \n" +
-            "Caught in a landside, 🎵 \n" +
-            "No escape from reality Open your eyes, \n" +
-            "🎶 Look up to the skies and see 🎵\n" +
-            "Person: Sing believer by imagine dragons\n" +
+        startPrompt: "Person: Sing believer by imagine dragons\n" +
             "Singer:\n" +
             "🎤 First things first\n" +
             "I'ma say all the words inside my head\n" +
@@ -117,7 +110,7 @@ const PERSONALITIES = [
             "oh-ooh 🎶",
         useSamePrompt: true,
         stop: ["Person:", "Singer:"],
-        maxPromptLines: 6,
+        maxPromptLines: 15,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:\n",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
@@ -138,7 +131,7 @@ const PERSONALITIES = [
         preset: {
             engine: "text-davinci-003",
             temperature: 0.7,
-            maxTokens: 60,
+            maxTokens: 150,
             topP: 1.0,
             frequencyPenalty: 0,
             presencePenalty: 0.3,
