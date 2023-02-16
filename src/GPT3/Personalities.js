@@ -65,11 +65,11 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "text-davinci-003",
-            temperature: 0.8,
+            temperature: 0.85,
             maxTokens: 100,
             topP: 1.0,
-            frequencyPenalty: 0.8,
-            presencePenalty: 0.8,
+            frequencyPenalty: 0.9,
+            presencePenalty: 0.7,
         },
     },
     // Works with random questions, is a bit random and repetitive.
