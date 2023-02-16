@@ -59,8 +59,7 @@ const PERSONALITIES = [
                 finalOutput = output;
             }
 
-//             return isDisturbing ? censorText(finalOutput) : finalOutput;
-            return finalOutput;
+            return isDisturbing ? censorText(finalOutput) : finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
