@@ -49,7 +49,7 @@ const PERSONALITIES = [
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         useSamePrompt: false,
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 16,
+        maxPromptLines: 20,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         cleanOutput(output, isDisturbing) {
             let finalOutput;
@@ -59,12 +59,13 @@ const PERSONALITIES = [
                 finalOutput = output;
             }
 
-            return isDisturbing ? censorText(finalOutput) : finalOutput;
+//             return isDisturbing ? censorText(finalOutput) : finalOutput;
+            return finalOutput;
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "text-davinci-003",
-            temperature: 0.9,
+            temperature: 0.8,
             maxTokens: 100,
             topP: 1.0,
             frequencyPenalty: 0.8,
