@@ -51,6 +51,7 @@ const PERSONALITIES = [
         stop: ["You:", "Friend:", "He:", "\n"],
         maxPromptLines: 20,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
+        shouldClean: true,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -63,12 +64,34 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "text-davinci-003",
+            engine: "gpt-3.5-turbo-instruct",
             temperature: 0.85,
             maxTokens: 100,
             topP: 1.0,
             frequencyPenalty: 0.9,
             presencePenalty: 0.7,
+        },
+    },
+    {
+        name: "mens",
+        startPrompt: "Jij: He hoe gaat het?\nVriend: Goed! Was wat oude films aan het kijken.\nJij: Heb je nog een aanrader voor me?\nVriend: Nee, niet echt.",
+        useSamePrompt: false,
+        stop: ["Jij:", "Vriend:", "Hij:", "\n"],
+        maxPromptLines: 16,
+        newInput: (input) => "\nJij: " + input.replace(/\n/gm, " ") + "\nVriend:",
+        shouldClean: false,
+        language: "nl-NL",
+        cleanOutput(output, _isDisturbing) {
+            return output;
+        },
+        noResponse: "Sorry, ik weet niet goed hoe ik daarop moet reageren",
+        preset: {
+            engine: "gpt-3.5-turbo-instruct",
+            temperature: 0.6,
+            maxTokens: 50,
+            topP: 1.0,
+            frequencyPenalty: 0.9,
+            presencePenalty: 0.9,
         },
     },
     // Works with random questions, is a bit random and repetitive.
@@ -79,6 +102,7 @@ const PERSONALITIES = [
         stop: ["Q:", "A:", "\n"],
         maxPromptLines: 10,
         newInput: (input) => "\nQ: " + input.replace(/\n/gm, " ") + "\nA:",
+        shouldClean: false,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -91,7 +115,7 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "text-davinci-003",
+            engine: "gpt-3.5-turbo-instruct",
             temperature: 0.8,
             maxTokens: 50,
             topP: 1.0,
@@ -112,6 +136,7 @@ const PERSONALITIES = [
         stop: ["Person:", "Singer:"],
         maxPromptLines: 15,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:\n",
+        shouldClean: false,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -129,7 +154,7 @@ const PERSONALITIES = [
             "🎶": P_LIGHT,
         }, true),
         preset: {
-            engine: "text-davinci-003",
+            engine: "gpt-3.5-turbo-instruct",
             temperature: 0.7,
             maxTokens: 150,
             topP: 1.0,
@@ -145,6 +170,7 @@ const PERSONALITIES = [
         stop: ["Person:", "AI:", "\n"],
         maxPromptLines: 10,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nAI:",
+        shouldClean: false,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
             if (output.indexOf(":") < 15 && output.substring(0, output.indexOf(":")).endsWith("<")) {
@@ -157,7 +183,7 @@ const PERSONALITIES = [
         },
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
-            engine: "davinci-instruct-beta-v3",
+            engine: "gpt-3.5-turbo-instruct",
             temperature: 0.5,
             maxTokens: 100,
             topP: 1.0,
@@ -173,6 +199,7 @@ const PERSONALITIES = [
         stop: ["\n$"],
         maxPromptLines: 10,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
+        shouldClean: false,
         cleanOutput(output, _isDisturbing) {
             const newLines = [];
             output.trim().split("\n").forEach((line) => {
@@ -191,7 +218,7 @@ const PERSONALITIES = [
         },
         noResponse: "_no output_",
         preset: {
-            engine: "code-davinci-002",
+            engine: "gpt-3.5-turbo-instruct",
             temperature: 0.0,
             maxTokens: 100,
             topP: 1.0,

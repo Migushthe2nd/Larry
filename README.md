@@ -1,7 +1,7 @@
 # Larry
 
 Larry is a simple Discord bot that interacts with the OpenAI GTP3 API. It also has support for different personalities
-and even GPT2, served by booste. The bot keeps track of the conversation on a per-guild basis. You need to supply your
+~~and even GPT2, served by booste~~. The bot keeps track of the conversation on a per-guild basis. You need to supply your
 own OpenAI and booste API key for this to work.
 
 - only keeps the last 8 lines of a conversation, to limit token usage
@@ -12,7 +12,7 @@ own OpenAI and booste API key for this to work.
 - `larry help`: shows all available commands
 - `larry status`: shows the current configuration
 - `larry reset`: resets the conversation
-- `larry switch`: switches between GTP2 and GPT3 (default: GPT3). Current conversation will be reset.
+- ~~`larry switch`: switches between GTP2 and GPT3 (default: GPT3). Current conversation will be reset.~~
 - `larry join`: Joins your current voice channel. Will use the same message history as the written messages.
 - `larry leave`: Leaves the voice channel it is currently in.
 - `larry personality <human/random/obedient/terminal/simple/singer>`: switches the GPT3 personality (default: human). Current conversation will be reset.

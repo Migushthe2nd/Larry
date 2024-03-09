@@ -41,12 +41,12 @@ class GPT3 {
                         const text = response.data.choices[0].text;
                         const textNoSpecialChars = GPT3._wordsOnly(text);
 
-//                         const isDisturbing = await GPT3._classifyIsDisturbing(textNoSpecialChars);
+                        const isDisturbing = await GPT3._classifyIsDisturbing(textNoSpecialChars);
 
                         this.prompt += text;
                         let clean = personality.cleanOutput(text, false);
                         if (isVoiceChat) clean = textNoSpecialChars;
-//                         if (isDisturbing) clean = (isVoiceChat ? GPT3.DISTURBING_WARNING : GPT3.PRETTY_DISTURBING_WARNING) + clean;
+                        if (isDisturbing) clean = (isVoiceChat ? GPT3.DISTURBING_WARNING : GPT3.PRETTY_DISTURBING_WARNING) + clean;
                         if (clean.trim().length > 0) {
                             resolve(clean);
 
@@ -68,6 +68,8 @@ class GPT3 {
     }
 
     static async _classifyIsDisturbing(text) {
+        return false;
+
         const response = await openai.complete({
             engine: "content-filter-alpha-c4",
             prompt: "<|endoftext|>" + text + "\n--\nOffensiveness Label:",
