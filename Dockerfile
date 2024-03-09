@@ -15,4 +15,4 @@ ENV NODE_ENV=production
 
 # currently just running with src still in the container instead of copying dist to a new container:
 # can't get tsc to copy assets (json, images, emails) to dist
-CMD pnpm run dev
+CMD pnpm run start
