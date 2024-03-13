@@ -49,7 +49,7 @@ const PERSONALITIES = [
         startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
         useSamePrompt: false,
         stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 20,
+        maxPromptLines: 100,
         newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
@@ -67,7 +67,7 @@ const PERSONALITIES = [
             engine: "gpt-3.5-turbo-instruct",
             temperature: 0.85,
             maxTokens: 100,
-            topP: 1.0,
+            topP: 0.7,
             frequencyPenalty: 0.9,
             presencePenalty: 0.7,
         },
@@ -77,7 +77,7 @@ const PERSONALITIES = [
         startPrompt: "Jij: He hoe gaat het?\nVriend: Goed! Was wat oude films aan het kijken.\nJij: Heb je nog een aanrader voor me?\nVriend: Nee, niet echt.",
         useSamePrompt: false,
         stop: ["Jij:", "Vriend:", "Hij:", "\n"],
-        maxPromptLines: 16,
+        maxPromptLines: 100,
         newInput: (input) => "\nJij: " + input.replace(/\n/gm, " ") + "\nVriend:",
         shouldClean: false,
         language: "nl-NL",
@@ -100,7 +100,7 @@ const PERSONALITIES = [
         startPrompt: "Q: What's the capitol of France?\nA: Paris is the capitol of France.\nQ: What's 50+9?\nA: 50+9 is 59.",
         useSamePrompt: true,
         stop: ["Q:", "A:", "\n"],
-        maxPromptLines: 10,
+        maxPromptLines: 100,
         newInput: (input) => "\nQ: " + input.replace(/\n/gm, " ") + "\nA:",
         shouldClean: false,
         cleanOutput(output, isDisturbing) {
@@ -134,7 +134,7 @@ const PERSONALITIES = [
             "oh-ooh 🎶",
         useSamePrompt: true,
         stop: ["Person:", "Singer:"],
-        maxPromptLines: 15,
+        maxPromptLines: 100,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nSinger:\n",
         shouldClean: false,
         cleanOutput(output, isDisturbing) {
@@ -168,7 +168,7 @@ const PERSONALITIES = [
         startPrompt: "Person: Give me the first 10 prime numbers?\nAI: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29.\nPerson: Write an introduction to a letter\nAI: Dear Dr. Smith, I hereby gladly accept your offer.",
         useSamePrompt: true,
         stop: ["Person:", "AI:", "\n"],
-        maxPromptLines: 10,
+        maxPromptLines: 100,
         newInput: (input) => "\nPerson: " + input.replace(/\n/gm, " ") + "\nAI:",
         shouldClean: false,
         cleanOutput(output, isDisturbing) {
@@ -197,7 +197,7 @@ const PERSONALITIES = [
         startPrompt: "The following is terminal input and output\n\n$ ls /etc\n> /etc/hosts  /etc/hostname  /etc/passwd  /etc/resolv.conf  /etc/shadow  /etc/sudoers\n$ which nano\n> /usr/bin/nano\n$ git add --all\n> Added new file.",
         useSamePrompt: false,
         stop: ["\n$"],
-        maxPromptLines: 10,
+        maxPromptLines: 100,
         newInput: (input) => "\n$ " + input.replace(/\n/gm, " ") + "\n>",
         shouldClean: false,
         cleanOutput(output, _isDisturbing) {

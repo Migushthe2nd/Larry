@@ -1,7 +1,6 @@
-const OpenAI = require("openai-api");
 const Personalities = require("./Personalities");
-const {BAD_WORD_BIASES} = require("./BadWordsBiases");
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+const {completeOpenAPI} = require("../sources/OpenAPI");
+const {completeOllama} = require("../sources/Ollama");
 
 class GPT3 {
     static TOXIC_THRESHOLD = -0.100;
@@ -17,52 +16,38 @@ class GPT3 {
         const personality = this._getPersonality();
         if (!this.prompt) this.prompt = personality.startPrompt;
         return new Promise(async (resolve) => {
-            if (!isBotAdmin && newInput.length > 150) {
-                if (isVoiceChat) {
-                    resolve("Sorry, could you summarize that?");
-                } else {
-                    resolve("Sorry, I'm not going to reed a message that long");
-                }
-            } else {
-                this.prompt += personality.newInput(newInput);
-                this.reducePromptSize();
+            this.prompt += personality.newInput(newInput);
+            this.reducePromptSize();
 
-                try {
-                    console.log("Sending prompt:", this.prompt);
-                    const response = await openai.complete({
-                        ...(personality.preset),
-                        stop: personality.stop,
-                        prompt: this.prompt,
-                        logitBias: {...BAD_WORD_BIASES, ...personality.logitBias},
-                    });
+            try {
+                console.log("Sending prompt:", this.prompt);
+                // const completion = await completeOpenAPI(this.prompt, personality);
+                const completion = await completeOllama(this.prompt, personality);
 
-                    if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].text.trim().length > 0) {
-                        console.log("Response received:", response.data.choices[0]);
-                        const text = response.data.choices[0].text;
-                        const textNoSpecialChars = GPT3._wordsOnly(text);
+                if (completion) {
+                    const textNoSpecialChars = GPT3._wordsOnly(completion);
 
-                        const isDisturbing = await GPT3._classifyIsDisturbing(textNoSpecialChars);
+                    const isDisturbing = await GPT3._classifyIsDisturbing(textNoSpecialChars);
 
-                        this.prompt += text;
-                        let clean = personality.cleanOutput(text, false);
-                        if (isVoiceChat) clean = textNoSpecialChars;
-                        if (isDisturbing) clean = (isVoiceChat ? GPT3.DISTURBING_WARNING : GPT3.PRETTY_DISTURBING_WARNING) + clean;
-                        if (clean.trim().length > 0) {
-                            resolve(clean);
+                    this.prompt += completion;
+                    let clean = personality.cleanOutput(completion, false);
+                    if (isVoiceChat) clean = textNoSpecialChars;
+                    if (isDisturbing) clean = (isVoiceChat ? GPT3.DISTURBING_WARNING : GPT3.PRETTY_DISTURBING_WARNING) + clean;
+                    if (clean.trim().length > 0) {
+                        resolve(clean);
 
-                            if (personality.useSamePrompt) {
-                                this.reset();
-                            }
-                            return;
+                        if (personality.useSamePrompt) {
+                            this.reset();
                         }
+                        return;
                     }
-
-                    console.log("Empty response received!");
-                    resolve(personality.noResponse);
-                } catch (e) {
-                    console.error("ERROR", e.response ? e.response.data : e);
-                    resolve("Sorry, I'm not really in the mood to talk");
                 }
+
+                console.log("Empty response received!");
+                resolve(personality.noResponse);
+            } catch (e) {
+                console.error("ERROR", e.response ? e.response.data : e);
+                resolve("Sorry, I'm offline right now. Please try again later.");
             }
         });
     }
