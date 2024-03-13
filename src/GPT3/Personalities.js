@@ -68,7 +68,7 @@ const PERSONALITIES = [
             engine: "gpt-3.5-turbo-instruct",
             temperature: 0.9,
             maxTokens: 100,
-            topP: 0.95,
+            topP: 1,
             frequencyPenalty: 0.9,
             presencePenalty: 0.7,
         },
