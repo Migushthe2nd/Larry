@@ -12,6 +12,7 @@ const completeOllama = async (prompt, personality) => {
         prompt: prompt,
         options: {
             temperature: personality.preset.temperature,
+            num_ctx: 8192,
             // repeat_penalty: personality.preset.presencePenalty,
             stop: personality.stop,
             top_p: personality.preset.topP,

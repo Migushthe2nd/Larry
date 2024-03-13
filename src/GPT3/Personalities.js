@@ -46,11 +46,12 @@ const PERSONALITIES = [
     // Can understand complex wordings.
     {
         name: "human",
-        startPrompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend: Not really.",
+        basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive and cool. You know internet memes and are a troll.\n\n",
+        startPrompt: "Friend: have you heard about china social credit memes?\nYou: Yeah they're great, especially the john cena memes.\nFriend: Haha yeah LOL?\nYou: I really like talking to you haha!",
         useSamePrompt: false,
-        stop: ["You:", "Friend:", "He:", "\n"],
-        maxPromptLines: 100,
-        newInput: (input) => "\nYou: " + input.replace(/\n/gm, " ") + "\nFriend:",
+        stop: ["Friend:", "You:", "He:", "\n"],
+        maxPromptLines: 20,
+        newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou:",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
@@ -65,9 +66,9 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 0.85,
+            temperature: 0.9,
             maxTokens: 100,
-            topP: 0.7,
+            topP: 0.95,
             frequencyPenalty: 0.9,
             presencePenalty: 0.7,
         },

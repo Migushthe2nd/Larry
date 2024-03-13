@@ -22,7 +22,7 @@ class GPT3 {
             try {
                 console.log("Sending prompt:", this.prompt);
                 // const completion = await completeOpenAPI(this.prompt, personality);
-                const completion = await completeOllama(this.prompt, personality);
+                const completion = await completeOllama(personality.basePrompt + this.prompt, personality);
 
                 if (completion) {
                     const textNoSpecialChars = GPT3._wordsOnly(completion);
