@@ -46,12 +46,12 @@ const PERSONALITIES = [
     // Can understand complex wordings.
     {
         name: "human",
-        basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive and cool.\n\n",
+        basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive, cool, but actively partake in conversation.\n\n",
         startPrompt: "Friend: hey man whats up?\nYou: not much, just bored.",
         useSamePrompt: false,
         stop: ["Friend:", "You:", "He:", "\n"],
         maxPromptLines: 20,
-        newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou: ",
+        newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou:",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
@@ -70,7 +70,7 @@ const PERSONALITIES = [
             maxTokens: 50,
             topP: 0.6,
             frequencyPenalty: 1.4,
-            presencePenalty: 0.7,
+            presencePenalty: 1.4,
         },
     },
     {
