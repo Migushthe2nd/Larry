@@ -46,11 +46,11 @@ const PERSONALITIES = [
     // Can understand complex wordings.
     {
         name: "human",
-        basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive and cool. You know internet memes and are a troll.\n\n",
-        startPrompt: "Friend: have you heard about china social credit memes?\nYou: Yeah they're great, especially the john cena memes.\nFriend: Haha yeah LOL?\nYou: I really like talking to you haha!",
+        basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive and cool.\n\n",
+        startPrompt: "Friend: hey man whats up?\nYou: not much, just bored.\nFriend: what's your moms age?\nYou: ",
         useSamePrompt: false,
         stop: ["Friend:", "You:", "He:", "\n"],
-        maxPromptLines: 20,
+        maxPromptLines: 200,
         newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou: ",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
@@ -66,10 +66,10 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 0.9,
+            temperature: 1,
             maxTokens: 50,
-            topP: 0.6,
-            frequencyPenalty: 1.4,
+            topP: 0.1,
+            frequencyPenalty: 1.5,
             presencePenalty: 0.7,
         },
     },
@@ -88,9 +88,9 @@ const PERSONALITIES = [
         noResponse: "Sorry, ik weet niet goed hoe ik daarop moet reageren",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 0.6,
+            temperature: 1,
             maxTokens: 50,
-            topP: 1.0,
+            topP: 0.1,
             frequencyPenalty: 0.9,
             presencePenalty: 0.9,
         },
