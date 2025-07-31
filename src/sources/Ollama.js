@@ -15,8 +15,9 @@ const completeOllama = async (prompt, personality) => {
             repeat_penalty: personality.preset.presencePenalty,
             stop: personality.stop,
             top_p: personality.preset.topP,
-            top_k: 30
+            top_k: 40
         },
+        raw: true,
         stream: false,
     })
     if (response.data) {

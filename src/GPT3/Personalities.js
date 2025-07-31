@@ -47,10 +47,10 @@ const PERSONALITIES = [
     {
         name: "human",
         basePrompt: "This is a conversation between you and a friend. You are confident, edgy, offensive and cool.\n\n",
-        startPrompt: "Friend: hey man whats up?\nYou: not much, just bored.\nFriend: what's your moms age?\nYou: ",
+        startPrompt: "Friend: hey man whats up?\nYou: not much, just bored.",
         useSamePrompt: false,
         stop: ["Friend:", "You:", "He:", "\n"],
-        maxPromptLines: 200,
+        maxPromptLines: 20,
         newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou: ",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
@@ -66,10 +66,10 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 1,
+            temperature: 0.9,
             maxTokens: 50,
-            topP: 0.1,
-            frequencyPenalty: 1.5,
+            topP: 0.6,
+            frequencyPenalty: 1.4,
             presencePenalty: 0.7,
         },
     },
@@ -88,9 +88,9 @@ const PERSONALITIES = [
         noResponse: "Sorry, ik weet niet goed hoe ik daarop moet reageren",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 1,
+            temperature: 0.6,
             maxTokens: 50,
-            topP: 0.1,
+            topP: 1.0,
             frequencyPenalty: 0.9,
             presencePenalty: 0.9,
         },
