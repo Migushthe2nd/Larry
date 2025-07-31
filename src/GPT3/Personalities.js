@@ -51,7 +51,7 @@ const PERSONALITIES = [
         useSamePrompt: false,
         stop: ["Friend:", "You:", "He:", "\n"],
         maxPromptLines: 20,
-        newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou:",
+        newInput: (input) => "\nFriend: " + input.replace(/\n/gm, " ") + "\nYou: ",
         shouldClean: true,
         cleanOutput(output, isDisturbing) {
             let finalOutput;
@@ -67,9 +67,9 @@ const PERSONALITIES = [
         preset: {
             engine: "gpt-3.5-turbo-instruct",
             temperature: 0.9,
-            maxTokens: 100,
+            maxTokens: 50,
             topP: 0.6,
-            frequencyPenalty: 0.9,
+            frequencyPenalty: 1.4,
             presencePenalty: 0.7,
         },
     },
