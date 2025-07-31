@@ -66,11 +66,11 @@ const PERSONALITIES = [
         noResponse: "Sorry, I don't have an answer to that",
         preset: {
             engine: "gpt-3.5-turbo-instruct",
-            temperature: 0.9,
+            temperature: 0.8,
             maxTokens: 50,
-            topP: 0.6,
-            frequencyPenalty: 1.4,
-            presencePenalty: 1.4,
+            topP: 0.4,
+            frequencyPenalty: 1.2,
+            presencePenalty: 1.2,
         },
     },
     {
